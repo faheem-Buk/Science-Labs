@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>نظام تعلم خوارزمية قيصر - العربية (٣١ حرفًا)</title>
+
+<style>
+  body {
+    font-family: "Amiri", "Scheherazade", "Noto Naskh Arabic", serif;
+    direction: rtl;
+    text-align: right;
+    margin: 20px;
+ background: #e6f2ff; /* LIGHT BLUE BACKGROUND */
+  }
+
+  .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  #hintToggle {
+    padding: 4px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    min-width: 110px;
+    transition: all 0.3s ease;
+  }
+
+  textarea, input {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 5px 0 10px 0;
+    padding: 6px;
+    font-size: 18px;
+    direction: rtl;
+  }
+
+  #plain, #cipher {
+    height: 32px !important;
+    line-height: 32px;
+    resize: none;
+    overflow-y: hidden;
+  }
+
+  .panel {
+    background: #ffffff;
+    border: 1px solid #ccc;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .key-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+    justify-content: center;
+  }
+
+  .key-box {
+    width: 45px;
+    height: 28px;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  table {
+    border-collapse: collapse;
+    text-align: center;
+    margin-bottom: 20px;
+    table-layout: fixed;
+    width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    width: 24px !important;
+    height: 24px !important;
+    line-height: 24px;
+  }
+
+  .highlight {
+    background-color: #ffe7a8 !important;
+    font-weight: bold;
+  }
+
+  .hint-green {
+    background-color: #b6f7b0 !important;
+  }
+
+  .hint-red {
+    background-color: #ffb3b3 !important;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>نظام تعلم خوارزمية قيصر - العربية (٣١ حرفًا)</h1>
+
+  <button id="hintToggle" onclick="toggleHintMode()">
+    وضع التلميح
+  </button>
+</div>
+
+<div id="alphabet-line" style="text-align:center; font-size:20px; margin:6px 0 10px 0;">
+  ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي ء ؤ ة
+</div>
+
+<hr>
+
+<!-- TABLE 1 -->
+<table id="table1">
+  <tr>
+    <th>ا</th><th>ب</th><th>ت</th><th>ث</th><th>ج</th><th>ح</th><th>خ</th><th>د</th>
+    <th>ذ</th><th>ر</th><th>ز</th><th>س</th><th>ش</th><th>ص</th><th>ض</th><th>ط</th>
+  </tr>
+  <tr>
+    <td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td>
+    <td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td>
+  </tr>
+</table>
+
+<!-- TABLE 2 -->
+<table id="table2">
+  <tr>
+    <th>ظ</th><th>ع</th><th>غ</th><th>ف</th><th>ق</th><th>ك</th><th>ل</th><th>م</th>
+    <th>ن</th><th>ه</th><th>و</th><th>ي</th><th>ء</th><th>ؤ</th><th>ة</th>
+  </tr>
+  <tr>
+    <td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td>
+    <td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td>
+  </tr>
+</table>
+
+<div class="panel">
+
+  <div class="key-line">
+    <label>مفتاح:</label>
+    <input id="keyEnc" type="text" maxlength="2" oninput="filterKeyInput();" class="key-box">
+  </div>
+
+  <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+    <label>النص الداخل:</label>
+    <input id="plain" type="text" style="width:60%; font-size:18px;">
+    <button onclick="plain.value='';" style="padding:4px 10px; font-size:14px;">إمسح</button>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+    <label>النص النـاتـج:</label>
+    <input id="cipher" type="text" style="width:60%; font-size:18px;">
+    <button onclick="cipher.value='';" style="padding:4px 10px; font-size:14px;">إمسح</button>
+  </div>
+
+</div>
+
+<script>
+  const alphabet = "ابتثجحخدذرزسشصضطظعغفقكلمنهويءؤة";
+  const MOD = alphabet.length;
+
+  let pointerIndex = 8;
+  let hintEnabled = false;
+  let activeHints = [];
+
+  function clearHighlights() {
+    document.querySelectorAll("td, th").forEach(c => {
+      c.classList.remove("highlight", "hint-green", "hint-red");
+    });
+  }
+
+  function highlightColumn(col) {
+    clearHighlights();
+
+    let rows1 = document.querySelectorAll("#table1 tr");
+    rows1.forEach(row => {
+      let cell = row.children[col];
+      if (cell) cell.classList.add("highlight");
+    });
+
+    if (col >= 16) {
+      let rows2 = document.querySelectorAll("#table2 tr");
+      rows2.forEach(row => {
+        let cell = row.children[col - 16];
+        if (cell) cell.classList.add("highlight");
+      });
+    }
+  }
+
+  function updatePointer() {
+    highlightColumn(pointerIndex);
+  }
+
+  function selectColumnByClick(col) {
+    pointerIndex = col;
+    updatePointer();
+    showHint(col);
+  }
+
+  function appendIfSelected(col) {
+    if (col !== pointerIndex) return;
+    cipher.value += alphabet[col];
+  }
+
+  window.onload = function () {
+    updatePointer();
+
+    /* TABLE 1 — TOP ROW */
+    document.querySelectorAll("#table1 tr:first-child th").forEach((cell, index) => {
+      cell.onclick = () => selectColumnByClick(index);
+      cell.ondblclick = () => appendIfSelected(index);
+    });
+
+    /* TABLE 1 — SECOND ROW */
+    document.querySelectorAll("#table1 tr:nth-child(2) td").forEach((cell, index) => {
+      cell.onclick = () => selectColumnByClick(index);
+      cell.ondblclick = () => appendIfSelected(index);
+    });
+
+    /* TABLE 2 — TOP ROW */
+    document.querySelectorAll("#table2 tr:first-child th").forEach((cell, index) => {
+      let realIndex = index + 16;
+      cell.onclick = () => selectColumnByClick(realIndex);
+      cell.ondblclick = () => appendIfSelected(realIndex);
+    });
+
+    /* TABLE 2 — SECOND ROW */
+    document.querySelectorAll("#table2 tr:nth-child(2) td").forEach((cell, index) => {
+      let realIndex = index + 16;
+      cell.onclick = () => selectColumnByClick(realIndex);
+      cell.ondblclick = () => appendIfSelected(realIndex);
+    });
+  };
+
+  function filterKeyInput() {
+    keyEnc.value = keyEnc.value.replace(/[^0-9]/g, "");
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight") {
+      pointerIndex = (pointerIndex - 1 + MOD) % MOD;
+      updatePointer();
+    }
+    if (e.key === "ArrowLeft") {
+      pointerIndex = (pointerIndex + 1) % MOD;
+      updatePointer();
+    }
+  });
+
+  /* -------------------------
+     HINT MODE
+     ------------------------- */
+
+  function toggleHintMode() {
+    hintEnabled = !hintEnabled;
+    const btn = document.getElementById("hintToggle");
+
+    if (hintEnabled) {
+      btn.innerHTML = "وضع التلميح";
+      btn.style.backgroundColor = "#fff8b3";
+      btn.style.color = "#000";
+      btn.style.boxShadow = "0 0 6px #ffd84d";
+    } else {
+      btn.innerHTML = "وضع التلميح";
+      btn.style.backgroundColor = "#e0e0e0";
+      btn.style.color = "#666";
+      btn.style.boxShadow = "none";
+      clearHintColors();
+    }
+  }
+
+  function clearHintColors() {
+    activeHints.forEach(i => {
+      const cell = document.getElementById("ptr-" + i);
+      if (cell) cell.classList.remove("hint-green", "hint-red");
+    });
+    activeHints = [];
+    clearHighlights();
+    updatePointer();
+  }
+
+  function showHint(index) {
+    if (!hintEnabled) return;
+
+    clearHintColors();
+
+    const key = parseInt(keyEnc.value || "0", 10);
+    const cipherIndex = (index + key) % MOD;
+    const plainIndex = (index - key + MOD) % MOD;
+
+    colorCell(cipherIndex, "hint-green");
+    colorCell(plainIndex, "hint-red");
+
+    activeHints = [cipherIndex, plainIndex];
+
+    setTimeout(clearHintColors, 5000);
+  }
+
+  function colorCell(index, className) {
+    let cell;
+    if (index < 16) {
+      cell = document.querySelector(`#table1 tr:nth-child(1)`).children[index];
+    } else {
+      cell = document.querySelector(`#table2 tr:nth-child(1)`).children[index - 16];
+    }
+    if (cell) cell.classList.add(className);
+  }
+</script>
+
+</body>
+</html>
