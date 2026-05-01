@@ -54,69 +54,18 @@
     }
 
     .key-label { color: red; font-weight: bold; }
-
-    /* Draggable popup window */
-    #popupWindow {
-      position: fixed;
-      width: 550px;
-      height: 420px;
-      background: #fdfdfd;
-      border: 1px solid #444;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      top: 80px;
-      right: 40px;
-      display: none;
-      z-index: 9999;
-    }
-
-    #popupHeader {
-      background: #444;
-      color: #fff;
-      padding: 6px 10px;
-      cursor: move;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 14px;
-    }
-
-    #popupHeader span {
-      font-weight: bold;
-    }
-
-    #popupClose {
-      cursor: pointer;
-      padding: 0 6px;
-      font-weight: bold;
-    }
-
-    #popupContent {
-      padding: 8px;
-      height: calc(100% - 32px);
-      overflow-y: auto;
-      font-size: 14px;
-      line-height: 1.4;
-      background: #fff;
-    }
   </style>
 </head>
 
 <body>
 
-  <!-- Draggable popup window -->
-  <div id="popupWindow">
-    <div id="popupHeader">
-      <span id="popupTitle">Help</span>
-      <div id="popupClose">X</div>
-    </div>
-    <div id="popupContent"></div>
-  </div>
-
   <div class="top-bar">
     <h2 style="margin-bottom:0;">Columnar Transposition Workpad</h2>
     <div class="top-buttons">
       <button onclick="openHelp()">Help</button>
-      <button onclick="getRandomMessage()">Get Message</button>
+      <button onclick="openMessage()">Teacher Messages</button>
+      <button onclick="checkMyWork(document.getElementById('cipher').value)">Check My Work</button>
+      <button onclick="openSignature()">Cipher Image</button>
     </div>
   </div>
 
@@ -189,7 +138,7 @@
 
 <script>
 /* ============================================================
-   CORE LOGIC (unchanged)
+   CORE LOGIC
    ============================================================ */
 let lastHighlightedColumn = null;
 let mode = "encrypt";
@@ -508,184 +457,15 @@ function setupMatrixAutoAdvance() {
   }
 }
 
-/* ============================================================
-   DRAGGABLE POPUP
-   ============================================================ */
-(function setupDraggablePopup() {
-  const popup = document.getElementById("popupWindow");
-  const header = document.getElementById("popupHeader");
-  const closeBtn = document.getElementById("popupClose");
+window.onload = function() {
+  document.getElementById("rows").value = 1;
+  document.getElementById("cols").value = 1;
+  refreshTable();
+};
+</script>
 
-  let offsetX = 0;
-  let offsetY = 0;
-  let isDragging = false;
-
-  header.addEventListener("mousedown", function(e) {
-    isDragging = true;
-    const rect = popup.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
-    document.body.style.userSelect = "none";
-  });
-
-  document.addEventListener("mousemove", function(e) {
-    if (!isDragging) return;
-    const newLeft = e.clientX - offsetX;
-    const newTop = e.clientY - offsetY;
-    popup.style.left = newLeft + "px";
-    popup.style.top = newTop + "px";
-    popup.style.right = "auto";
-  });
-
-  document.addEventListener("mouseup", function() {
-    isDragging = false;
-    document.body.style.userSelect = "";
-  });
-
-  closeBtn.addEventListener("click", function() {
-    popup.style.display = "none";
-  });
-})();
-
-    function showPopup(title, content) {
-      const popup = document.getElementById("popupWindow");
-      const titleEl = document.getElementById("popupTitle");
-      const contentEl = document.getElementById("popupContent");
-
-      titleEl.textContent = title;
-      contentEl.textContent = content;
-
-      // Initial position near the right side
-      popup.style.display = "block";
-      popup.style.right = "40px";
-      popup.style.top = "80px";
-      popup.style.left = "auto";
-    }
-
-    /* ------------------------------
-       HELP + MESSAGE FUNCTIONS (popup-based)
-       ------------------------------ */
-
-    function openHelp() {
-      const useFile = confirm("Load help from a text file? (Cancel = use built-in help)");
-      if (useFile) {
-        document.getElementById("helpFileInput").click();
-      } else {
-        showPopup("Help", helpText);
-      }
-    }
-
-    document.getElementById("helpFileInput").addEventListener("change", function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        helpText = evt.target.result || helpText;
-        showPopup("Help", helpText);
-      };
-      reader.readAsText(file);
-    });
-
-    function getRandomMessage() {
-      const useFile = confirm("Use messages from a text file? (Cancel = use built-in messages)");
-      if (useFile) {
-        document.getElementById("messageFileInput").click();
-      } else {
-        if (!messageList.length) {
-          alert("No messages available.");
-          return;
-        }
-        const idx = Math.floor(Math.random() * messageList.length);
-        const msg = messageList[idx];
-        document.getElementById("message").value = msg;
-        updateMessageLength();
-        showPopup("Random Message", msg);
-      }
-    }
-
-    document.getElementById("messageFileInput").addEventListener("change", function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        const text = evt.target.result || "";
-        const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
-        if (lines.length) {
-          messageList = lines;
-          const idx = Math.floor(Math.random() * messageList.length);
-          const msg = messageList[idx];
-          document.getElementById("message").value = msg;
-          updateMessageLength();
-          showPopup("Random Message", msg);
-        } else {
-          alert("The message file appears to be empty.");
-        }
-      };
-      reader.readAsText(file);
-    });
-
-    window.onload = function() {
-      document.getElementById("rows").value = 1;
-      document.getElementById("cols").value = 1;
-      refreshTable();
-    };
-
-    /* ---------------------------
-       LEGACY FUNCTIONS FROM AUTHOR
-       (kept with new names to avoid conflicts)
-       ---------------------------- */
-
-    function legacyOpenHelp() {
-      fetch("assets/help/help.txt")
-        .then(r => r.text())
-        .then(t => {
-          // You can wire this to any element you like in your environment
-          console.log("Legacy help content loaded:", t);
-        });
-    }
-
-    function legacyOpenMessage() {
-      fetch("assets/messages/messages.txt")
-        .then(r => r.text())
-        .then(t => {
-          console.log("Legacy message content loaded:", t);
-        });
-    }
-
-    function legacyCloseWindow(id) {
-      const el = document.getElementById(id);
-      if (el) el.style.display = "none";
-    }
-
-    let legacyActiveWindow = null;
-    let legacyOffsetX = 0;
-    let legacyOffsetY = 0;
-
-    function legacyStartDrag(e, id) {
-      legacyActiveWindow = document.getElementById(id);
-      if (!legacyActiveWindow) return;
-      legacyOffsetX = e.clientX - legacyActiveWindow.offsetLeft;
-      legacyOffsetY = e.clientY - legacyActiveWindow.offsetTop;
-      document.onmousemove = legacyDrag;
-      document.onmouseup = legacyStopDrag;
-    }
-
-    function legacyDrag(e) {
-      if (!legacyActiveWindow) return;
-      legacyActiveWindow.style.left = (e.clientX - legacyOffsetX) + "px";
-      legacyActiveWindow.style.top = (e.clientY - legacyOffsetY) + "px";
-    }
-
-    function legacyStopDrag() {
-      legacyActiveWindow = null;
-      document.onmousemove = null;
-      document.onmouseup = null;
-    }
-  </script>
-
-
-
-<script src="../js/main.js"></script>
+<!-- Link to your restored main.js (help, messages, check, signature) -->
+<script src="../js/CSS/main.js"></script>
 
 </body>
 </html>
