@@ -2,54 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faheem 2025 Science Lab</title>
-    <!-- Use the correct CSS path (same folder as main.js) -->
-    <link rel="stylesheet" href="js/CSS/main.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background: #222;
+            color: white;
+            padding: 20px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .tools-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 30px;
+            gap: 25px;
+        }
+
+        .tool-card {
+            background: white;
+            width: 220px;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: 0.2s;
+        }
+
+        .tool-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+        }
+
+        .tool-card img {
+            width: 180px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .tool-card p {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Founder’s Stamp -->
-    <div class="founder-stamp">
-        <img src="assets/images/main Faheem with 2025  .png" alt="Founder Stamp">
-        <div class="stamp-text">
-            <strong>Faheem</strong><br>
-            Year of Independence — 2025<br>
-            <em>Welcome. May your learning here enlighten your mind.</em>
-        </div>
+<header>
+    Faheem 2025 Science Lab
+</header>
+
+<div class="tools-container">
+
+    <!-- Column Transposition Cipher Tool -->
+    <div class="tool-card">
+        <a href="Column transpositin Eng html V22.html">
+            <img src="assets/help_files/column_trans_cipher.png"
+                 alt="Column Transposition Cipher">
+        </a>
+        <p>Column Transposition Cipher</p>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-container">
-        <h1>Welcome to the Main Room</h1>
-        <p>Select a tool to begin your journey.</p>
-
-        <div class="tool-buttons">
-            <!-- Text buttons -->
-            <a href="tools/caesar_english.html" class="tool-btn">Caesar Cipher (English)</a>
-            <a href="tools/caesar_arabic.html" class="tool-btn">Caesar Cipher (Arabic)</a>
-            <a href="tools/column_trans_eng_v25.html" class="tool-btn">Column Transposition (English)</a>
-
-            <!-- Image buttons -->
-            <a href="tools/caesar_arabic.html">
-                <img src="assets/images/caesar_arabic.png"
-                     alt="Caesar Arabic Tool"
-                     style="width: 250px; cursor: pointer;">
-            </a>
-
-            <a href="tools/column_trans_eng_v25.html">
-                <img src="assets/images/column_trans_cipher.png"
-                     alt="Column Transposition English Tool"
-                     style="width: 250px; cursor: pointer;">
-            </a>
-        </div>
-    </div>
-
-    <footer>
-        <img src="assets/images/badge - official academic  .png"
-             alt="Dr. Faheem Buhatwa Signature"
-             style="width:300px;">
-    </footer>
+</div>
 
 </body>
 </html>
