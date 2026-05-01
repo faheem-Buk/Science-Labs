@@ -547,4 +547,145 @@ function setupMatrixAutoAdvance() {
   });
 })();
 
-function showPopup(title
+    function showPopup(title, content) {
+      const popup = document.getElementById("popupWindow");
+      const titleEl = document.getElementById("popupTitle");
+      const contentEl = document.getElementById("popupContent");
+
+      titleEl.textContent = title;
+      contentEl.textContent = content;
+
+      // Initial position near the right side
+      popup.style.display = "block";
+      popup.style.right = "40px";
+      popup.style.top = "80px";
+      popup.style.left = "auto";
+    }
+
+    /* ------------------------------
+       HELP + MESSAGE FUNCTIONS (popup-based)
+       ------------------------------ */
+
+    function openHelp() {
+      const useFile = confirm("Load help from a text file? (Cancel = use built-in help)");
+      if (useFile) {
+        document.getElementById("helpFileInput").click();
+      } else {
+        showPopup("Help", helpText);
+      }
+    }
+
+    document.getElementById("helpFileInput").addEventListener("change", function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        helpText = evt.target.result || helpText;
+        showPopup("Help", helpText);
+      };
+      reader.readAsText(file);
+    });
+
+    function getRandomMessage() {
+      const useFile = confirm("Use messages from a text file? (Cancel = use built-in messages)");
+      if (useFile) {
+        document.getElementById("messageFileInput").click();
+      } else {
+        if (!messageList.length) {
+          alert("No messages available.");
+          return;
+        }
+        const idx = Math.floor(Math.random() * messageList.length);
+        const msg = messageList[idx];
+        document.getElementById("message").value = msg;
+        updateMessageLength();
+        showPopup("Random Message", msg);
+      }
+    }
+
+    document.getElementById("messageFileInput").addEventListener("change", function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const text = evt.target.result || "";
+        const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+        if (lines.length) {
+          messageList = lines;
+          const idx = Math.floor(Math.random() * messageList.length);
+          const msg = messageList[idx];
+          document.getElementById("message").value = msg;
+          updateMessageLength();
+          showPopup("Random Message", msg);
+        } else {
+          alert("The message file appears to be empty.");
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    window.onload = function() {
+      document.getElementById("rows").value = 1;
+      document.getElementById("cols").value = 1;
+      refreshTable();
+    };
+
+    /* ---------------------------
+       LEGACY FUNCTIONS FROM AUTHOR
+       (kept with new names to avoid conflicts)
+       ---------------------------- */
+
+    function legacyOpenHelp() {
+      fetch("assets/help/help.txt")
+        .then(r => r.text())
+        .then(t => {
+          // You can wire this to any element you like in your environment
+          console.log("Legacy help content loaded:", t);
+        });
+    }
+
+    function legacyOpenMessage() {
+      fetch("assets/messages/messages.txt")
+        .then(r => r.text())
+        .then(t => {
+          console.log("Legacy message content loaded:", t);
+        });
+    }
+
+    function legacyCloseWindow(id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = "none";
+    }
+
+    let legacyActiveWindow = null;
+    let legacyOffsetX = 0;
+    let legacyOffsetY = 0;
+
+    function legacyStartDrag(e, id) {
+      legacyActiveWindow = document.getElementById(id);
+      if (!legacyActiveWindow) return;
+      legacyOffsetX = e.clientX - legacyActiveWindow.offsetLeft;
+      legacyOffsetY = e.clientY - legacyActiveWindow.offsetTop;
+      document.onmousemove = legacyDrag;
+      document.onmouseup = legacyStopDrag;
+    }
+
+    function legacyDrag(e) {
+      if (!legacyActiveWindow) return;
+      legacyActiveWindow.style.left = (e.clientX - legacyOffsetX) + "px";
+      legacyActiveWindow.style.top = (e.clientY - legacyOffsetY) + "px";
+    }
+
+    function legacyStopDrag() {
+      legacyActiveWindow = null;
+      document.onmousemove = null;
+      document.onmouseup = null;
+    }
+  </script>
+
+
+
+<script src="../js/main.js"></script>
+
+</body>
+</html>
