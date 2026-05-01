@@ -1,0 +1,30 @@
+1,	6,	27, cycleYes  , ,	I will meet you after class,   	O corr skkz eua glzkx irgyy
+2, 	6,	32, cycleYes , ,	Please bring your notes tomorrow,   	Vrkgyk hxotm euax tuzky zusuxxuc
+3, 	6,	31, cycleYes, ,	The assignment is due next week,   	Znk gyyomtsktz oy jak tkdz ckkq
+4, 	6, 	32, cycleYes, ,	I finished the work this morning,  	O lotoynkj znk cuxq znoy suxtotm
+5,	6 , 	34, cycleYes, ,	Your project presentation is ready,  	Fvby wyvqlja wylzluahapvu pz ylhkf
+6, 	6, 	32, cycleYes, ,	The lecture starts at nine sharp,   	Znk rkizaxk yzgxzy gz totk yngxv
+7, 	6, 	33, cycleYes,  ,	I will send the file this evening ,  	O corr yktj znk lork znoy kbktotm
+8, 	6, 	29, cycleYes, ,	Please check your email later,   	Vrkgyk inkiq euax ksgor rgzkx
+9, 	6,	30, cycleYes, ,	The meeting has been postponed,	 Znk skkzotm ngy hkkt vuyzvutkj
+10,	6,	31, cycleYes,  ,	I will upload the video tonight, 	O corr avrugj znk bojku zutomnz
+11,	6,	32, cycleYes, ,	Your marks will be released soon  ,  	Euax sgxqy corr hk xkrkgykj yuut
+12, 	6,	33, cycleYes, ,	The tutorial begins at two pm,  	Znk zazuxogr hkmoty gz zcu vs
+13,	6,	32, cycleYes, ,	I will review your answers today, 	O corr xkbokc euax gtyckxy zujge
+14,	6,	31, cycleYes, ,	Please submit your work on time, 	Vrkgyk yahsoz euax cuxq ut zosk
+15,	6,	34, cycleYes, ,	The exam results are now available, 	Znk kdgs xkyarzy gxk tuc gbgorghrk
+16,	6, 	33, cycleYes,  , 	I will explain the topic tomorrow,  	O corr kdvrgot znk zuvoi zusuxxuc
+17, 	6, 	33, cycleYes, ,	Your attendance has been recorded, 	Euax gzzktjgtik ngy hkkt xkiuxjkj
+18, 	6, 	35, cycleYes, ,	The class will start in ten minutes, 	Znk irgyy corr yzgxz ot zkt sotazky
+19, 	6 , 	32, cycleYes,  ,	I will prepare the notes for you,  	O corr vxkvgxk znk tuzky lux eua
+20, 	6, 	35, cycleYes,  ,	Please revise the last three topics, 	Vrkgyk xkboyk znk rgyz znxkk zuvoiy
+21, 	6, 	30, cycleNo, ,	The deadline has been extended, 	Znk jkgjrotk ngy hkkt kdzktjkj
+22, 	6, 	32, cycleYes, ,	I will check your progress later,  	O corr inkiq euax vxumxkyy rgzkx
+23, 	6, 	31, cycleYes, ,	Your feedback has been received, 	Euax lkkjhgiq ngy hkkt xkikobkj
+24, 	6, 	31, cycleNo, ,	The next lecture will be online,  	Znk tkdz rkizaxk corr hk utrotk
+25, 	6,	33, cycleYes,,	I will share the document shortly, 	O corr yngxk znk juiasktz ynuxzre
+26, 	6,	30, cycleYes,,	Please complete the task today,  	Vrkgyk iusvrkzk znk zgyq zujge
+27, 	6, 	29, cycleNo, ,	The schedule has been updated, 	Znk yinkjark ngy hkkt avjgzkj
+28, 	6, 	33, cycleYes, ,	I will answer your questions soon, 	O corr gtyckx euax wakyzouty yuut
+29, 	6, 	33, cycleYes, ,	Your submission has been accepted,  	Euax yahsoyyout ngy hkkt giikvzkj
+30, 	6, 	36, cycleYes, ,	The instructions will be given later,  	Znk otyzxaizouty corr hk mobkt rgzkx

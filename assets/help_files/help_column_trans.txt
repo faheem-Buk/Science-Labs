@@ -1,0 +1,13 @@
+Help for Column Transposition Learning Tool
+1. key in the input message to cipher or decipher
+2. Input message can be typed in using keyboard or copied and pasted into the Input message box.
+3. Not character counter will indicate number of characters, Spaces are not included in the count.
+4. Enter the Password (options) and the Key.
+5. Based on the key, number of columns is determined. Num of cols = Key length
+6. Work out number of Rows.  Message length / Num of cols .
+7 click Refresh the table.
+8 Enter the key value on top of the table.
+9. May ways to fill the table from the input message text. 
+  a- Manually type in the characters.
+  b- in order to cipher a plaintext message, automatically enter the message by clicking the button: "Fil table Row by Row"
+  c- In order to decipher a ciphered message, automatically enter the message by clicking the button: "Fill table Col by Col"
