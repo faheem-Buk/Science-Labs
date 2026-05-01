@@ -1,3 +1,6 @@
+/* ===============================
+   GLOBAL PAGE STYLE
+   =============================== */
 body {
     margin: 0;
     padding: 0;
@@ -6,13 +9,18 @@ body {
     text-align: center;
 }
 
+/* ===============================
+   MAIN CONTAINER
+   =============================== */
 .main-container {
-    margin-top: 120px;
+    margin-top: 140px;
+    padding: 20px;
 }
 
 h1 {
-    font-size: 32px;
+    font-size: 34px;
     margin-bottom: 10px;
+    font-weight: bold;
 }
 
 p {
@@ -20,6 +28,9 @@ p {
     color: #444;
 }
 
+/* ===============================
+   TOOL BUTTONS
+   =============================== */
 .tool-buttons {
     margin-top: 40px;
 }
@@ -41,7 +52,9 @@ p {
     background: #b8962f;
 }
 
-/* Founder Stamp */
+/* ===============================
+   FOUNDER STAMP
+   =============================== */
 .founder-stamp {
     position: absolute;
     top: 20px;
@@ -50,11 +63,13 @@ p {
 }
 
 .founder-stamp img {
-    width: 80px;
+    width: 90px;
     height: auto;
+    border-radius: 6px;
 }
 
 .stamp-text {
     font-size: 12px;
     margin-top: 5px;
+    line-height: 1.3;
 }
