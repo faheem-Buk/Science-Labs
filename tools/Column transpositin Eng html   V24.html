@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Columnar Transposition Workpad</title>
+
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .top-buttons button {
+      margin-left: 6px;
+    }
+
+    .container {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .left-panel { width: 45%; }
+    .right-panel { width: 55%; }
+
+    label { display: inline-block; margin-bottom: 2px; }
+    input[type="text"] { width: 100%; box-sizing: border-box; }
+    textarea { width: 100%; box-sizing: border-box; margin-top: 0; }
+
+    h3 {
+      font-size: 18px;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    .controls { margin: 4px 0; }
+    button { margin: 2px; }
+
+    button.wideBtn {
+      width: 240px;
+    }
+
+    table { border-collapse: collapse; margin-top: 4px; }
+    th, td {
+      border: 1px solid #000;
+      width: 30px;
+      height: 26px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .key-label { color: red; font-weight: bold; }
+
+    /* Draggable popup window */
+    #popupWindow {
+      position: fixed;
+      width: 550px;
+      height: 420px;
+      background: #fdfdfd;
+      border: 1px solid #444;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      top: 80px;
+      right: 40px;
+      display: none;
+      z-index: 9999;
+    }
+
+    #popupHeader {
+      background: #444;
+      color: #fff;
+      padding: 6px 10px;
+      cursor: move;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    #popupHeader span {
+      font-weight: bold;
+    }
+
+    #popupClose {
+      cursor: pointer;
+      padding: 0 6px;
+      font-weight: bold;
+    }
+
+    #popupContent {
+      padding: 8px;
+      height: calc(100% - 32px);
+      overflow-y: auto;
+      font-size: 14px;
+      line-height: 1.4;
+      background: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Draggable popup window -->
+  <div id="popupWindow">
+    <div id="popupHeader">
+      <span id="popupTitle">Help</span>
+      <div id="popupClose">X</div>
+    </div>
+    <div id="popupContent"></div>
+  </div>
+
+  <div class="top-bar">
+    <h2 style="margin-bottom:0;">Columnar Transposition Workpad</h2>
+    <div class="top-buttons">
+      <button onclick="openHelp()">Help</button>
+      <button onclick="getRandomMessage()">Get Message</button>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="left-panel">
+
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <label for="message">Plaintext or Ciphered Text</label>
+        <span id="msgLength">Message length (not counting spaces): 0</span>
+      </div>
+
+      <input type="text" id="message" oninput="updateMessageLength()">
+
+      <div style="display:flex; width:100%; gap:4%; margin:0;">
+        <label for="password" style="width:48%;">Password:</label>
+        <label for="numKey" style="width:48%;">Numerical Key:</label>
+      </div>
+
+      <div style="display:flex; width:100%; gap:4%; margin:0;">
+        <input type="text" id="password" style="width:48%;">
+        <input type="text" id="numKey" style="width:48%;">
+      </div>
+
+      <div style="display:flex; align-items:center; justify-content:space-between; width:100%; margin:6px 0;">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <label for="rows">Rows:</label>
+          <input type="number" id="rows" min="1" value="1" style="width:60px; text-align:center;">
+        </div>
+
+        <div style="display:flex; align-items:center; gap:6px;">
+          <label for="cols">Columns:</label>
+          <input type="number" id="cols" min="1" value="1" style="width:60px; text-align:center;">
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="wideBtn" onclick="fillRows()">Fill table Row by Row</button>
+        <button class="wideBtn" onclick="enableColumnClickModeDecrypt()">Fill table Column by Column</button>
+        <button class="wideBtn" onclick="refreshTable()">Refresh Table</button>
+
+        <button onclick="addFiller()" style="width:120px;">Add Fill</button>
+        <input type="text" id="fillerChar" value="X" maxlength="1" style="width:22px; text-align:center;">
+      </div>
+
+      <h3>Final Message</h3>
+      <textarea id="cipher" readonly style="height:28px; line-height:20px;"></textarea>
+
+      <div class="controls">
+        <button class="wideBtn" onclick="enableColumnClickModeEncrypt()">Write out A Column at a time</button>
+        <button class="wideBtn" onclick="writeAllRows()">Write out Rows</button>
+        <button class="wideBtn" onclick="undoLast()">Undo Last action</button>
+        <button class="wideBtn" onclick="clearFinalMessage()">Clear Final Message</button>
+      </div>
+
+      <h3>Rough Work Notes</h3>
+      <textarea id="notes" style="height:70px;"></textarea>
+
+    </div>
+
+    <div class="right-panel">
+      <h3 style="margin-top:0;">Key Row</h3>
+      <table id="keyRow"><tbody></tbody></table>
+
+      <h3 style="margin-top:6px;">Matrix</h3>
+      <table id="matrix"><tbody></tbody></table>
+    </div>
+
+  </div>
+
+<script>
+/* ============================================================
+   CORE LOGIC (unchanged)
+   ============================================================ */
+let lastHighlightedColumn = null;
+let mode = "encrypt";
+let cipherForDecrypt = "";
+let decryptIndex = 0;
+let filledColumns = new Set();
+
+function updateMessageLength() {
+  const msg = document.getElementById("message").value;
+  const noSpaces = msg.replace(/\s+/g, "").length;
+  document.getElementById("msgLength").innerText =
+    "Message length (not counting spaces): " + noSpaces;
+}
+
+function getMatrixCells() {
+  return document.querySelector("#matrix tbody").rows;
+}
+
+function clearMatrixContent() {
+  const rows = getMatrixCells();
+  for (let r = 0; r < rows.length; r++) {
+    const cells = rows[r].cells;
+    for (let c = 0; c < cells.length; c++) {
+      cells[c].innerText = "";
+    }
+  }
+}
+
+function disableAllClicks() {
+  const cells = document.querySelectorAll("#matrix td");
+  cells.forEach(cell => {
+    cell.onclick = null;
+    cell.style.cursor = "default";
+  });
+}
+
+function setupKeyRowAutoAdvance() {
+  const keyCells = document.querySelectorAll("#keyRow td");
+
+  keyCells.forEach((cell, index) => {
+    cell.oninput = () => {
+      let text = cell.innerText.trim();
+      if (text.length > 1) {
+        text = text[0];
+        cell.innerText = text;
+      }
+      if (text.length === 1 && index < keyCells.length - 1) {
+        keyCells[index + 1].focus();
+      }
+    };
+
+    cell.onkeydown = (e) => {
+      if (e.key === "Backspace" && cell.innerText === "" && index > 0) {
+        keyCells[index - 1].focus();
+      }
+    };
+  });
+}
+
+function refreshTable() {
+  const rows = parseInt(document.getElementById("rows").value, 10);
+  const cols = parseInt(document.getElementById("cols").value, 10);
+
+  document.getElementById("cipher").value = "";
+
+  lastHighlightedColumn = null;
+  mode = "encrypt";
+  cipherForDecrypt = "";
+  decryptIndex = 0;
+  filledColumns = new Set();
+
+  const keyBody = document.querySelector("#keyRow tbody");
+  const matrixBody = document.querySelector("#matrix tbody");
+  keyBody.innerHTML = "";
+  matrixBody.innerHTML = "";
+
+  const keyRow = document.createElement("tr");
+  for (let c = 0; c < cols; c++) {
+    const cell = document.createElement("td");
+    cell.contentEditable = "true";
+    cell.classList.add("key-label");
+    keyRow.appendChild(cell);
+  }
+  keyBody.appendChild(keyRow);
+
+  for (let r = 0; r < rows; r++) {
+    const row = document.createElement("tr");
+    for (let c = 0; c < cols; c++) {
+      const cell = document.createElement("td");
+      cell.contentEditable = "true";
+      row.appendChild(cell);
+    }
+    matrixBody.appendChild(row);
+  }
+
+  setupKeyRowAutoAdvance();
+  setupMatrixAutoAdvance();
+  disableAllClicks();
+}
+
+function fillRows() {
+  let msg = document.getElementById("message").value.replace(/\s+/g, "");
+  const rows = getMatrixCells();
+  clearMatrixContent();
+
+  let index = 0;
+  for (let r = 0; r < rows.length; r++) {
+    const cells = rows[r].cells;
+    for (let c = 0; c < cells.length; c++) {
+      cells[c].innerText = msg[index] || "";
+      index++;
+    }
+  }
+}
+
+function addFiller() {
+  const filler = document.getElementById("fillerChar").value || "X";
+  const rows = getMatrixCells();
+
+  for (let r = 0; r < rows.length; r++) {
+    const cells = rows[r].cells;
+    for (let c = 0; c < cells.length; c++) {
+      if (cells[c].innerText.trim() === "") {
+        cells[c].innerText = filler;
+      }
+    }
+  }
+}
+
+function appendToCipher(text) {
+  const box = document.getElementById("cipher");
+  box.value += text;
+}
+
+function undoLast() {
+  const box = document.getElementById("cipher");
+  box.value = box.value.slice(0, -1);
+}
+
+function clearFinalMessage() {
+  document.getElementById("cipher").value = "";
+}
+
+function writeAllRows() {
+  const rows = getMatrixCells();
+  let result = "";
+
+  for (let r = 0; r < rows.length; r++) {
+    const cells = rows[r].cells;
+    for (let c = 0; c < cells.length; c++) {
+      const text = cells[c].innerText.trim();
+      if (text) result += text;
+    }
+  }
+
+  appendToCipher(result);
+}
+
+function highlightColumn(colIndex) {
+  const rows = getMatrixCells();
+
+  if (lastHighlightedColumn !== null) {
+    for (let r = 0; r < rows.length; r++) {
+      rows[r].cells[lastHighlightedColumn].style.backgroundColor = "";
+    }
+  }
+
+  for (let r = 0; r < rows.length; r++) {
+    rows[r].cells[colIndex].style.backgroundColor = "#ffff99";
+  }
+
+  lastHighlightedColumn = colIndex;
+}
+
+function readSingleColumn(colIndex) {
+  highlightColumn(colIndex);
+
+  const rows = getMatrixCells();
+  let result = "";
+
+  for (let r = 0; r < rows.length; r++) {
+    const text = rows[r].cells[colIndex].innerText.trim();
+    if (text) result += text;
+  }
+
+  appendToCipher(result);
+}
+
+function fillSingleColumnForDecrypt(colIndex) {
+  if (filledColumns.has(colIndex)) return;
+
+  highlightColumn(colIndex);
+
+  const rows = getMatrixCells();
+  const rowCount = rows.length;
+
+  for (let r = 0; r < rowCount; r++) {
+    if (decryptIndex < cipherForDecrypt.length) {
+      rows[r].cells[colIndex].innerText = cipherForDecrypt[decryptIndex++];
+    }
+  }
+
+  filledColumns.add(colIndex);
+}
+
+function handleColumnClick(colIndex) {
+  if (mode === "encrypt") {
+    readSingleColumn(colIndex);
+  } else if (mode === "decrypt") {
+    fillSingleColumnForDecrypt(colIndex);
+  }
+}
+
+function enableColumnClickModeEncrypt() {
+  mode = "encrypt";
+  const rows = getMatrixCells();
+  if (!rows.length) return;
+
+  disableAllClicks();
+
+  const rowCount = rows.length;
+  const colCount = rows[0].cells.length;
+
+  for (let c = 0; c < colCount; c++) {
+    for (let r = 0; r < rowCount; r++) {
+      const cell = rows[r].cells[c];
+      cell.style.cursor = "pointer";
+      cell.onclick = () => handleColumnClick(c);
+    }
+  }
+}
+
+function enableColumnClickModeDecrypt() {
+  mode = "decrypt";
+  cipherForDecrypt = document.getElementById("message").value.replace(/\s+/g, "");
+  decryptIndex = 0;
+  filledColumns = new Set();
+
+  const rows = getMatrixCells();
+  if (!rows.length) return;
+
+  disableAllClicks();
+
+  const rowCount = rows.length;
+  const colCount = rows[0].cells.length;
+
+  for (let c = 0; c < colCount; c++) {
+    for (let r = 0; r < rowCount; r++) {
+      const cell = rows[r].cells[c];
+      cell.style.cursor = "pointer";
+      cell.onclick = () => handleColumnClick(c);
+    }
+  }
+}
+
+/* ============================================================
+   AUTO ADVANCE LOGIC
+   ============================================================ */
+function setupMatrixAutoAdvance() {
+  const rows = getMatrixCells();
+  if (!rows.length) return;
+
+  const totalRows = rows.length;
+  const totalCols = rows[0].cells.length;
+
+  for (let r = 0; r < totalRows; r++) {
+    for (let c = 0; c < totalCols; c++) {
+      const cell = rows[r].cells[c];
+      cell.contentEditable = "true";
+
+      cell.oninput = () => {
+        let text = cell.innerText.trim();
+
+        if (text.length > 1) {
+          text = text[0];
+          cell.innerText = text;
+        }
+
+        if (text.length === 1) {
+          let nextR = r;
+          let nextC = c + 1;
+
+          if (nextC >= totalCols) {
+            nextC = 0;
+            nextR++;
+          }
+
+          if (nextR >= totalRows) {
+            nextR = 0;
+            nextC = 0;
+          }
+
+          rows[nextR].cells[nextC].focus();
+        }
+      };
+
+      cell.onkeydown = (e) => {
+        if (e.key === "Backspace" && cell.innerText === "") {
+          let prevR = r;
+          let prevC = c - 1;
+
+          if (prevC < 0) {
+            prevC = totalCols - 1;
+            prevR--;
+          }
+
+          if (prevR < 0) {
+            prevR = totalRows - 1;
+            prevC = totalCols - 1;
+          }
+
+          rows[prevR].cells[prevC].focus();
+        }
+      };
+    }
+  }
+}
+
+/* ============================================================
+   DRAGGABLE POPUP
+   ============================================================ */
+(function setupDraggablePopup() {
+  const popup = document.getElementById("popupWindow");
+  const header = document.getElementById("popupHeader");
+  const closeBtn = document.getElementById("popupClose");
+
+  let offsetX = 0;
+  let offsetY = 0;
+  let isDragging = false;
+
+  header.addEventListener("mousedown", function(e) {
+    isDragging = true;
+    const rect = popup.getBoundingClientRect();
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+    document.body.style.userSelect = "none";
+  });
+
+  document.addEventListener("mousemove", function(e) {
+    if (!isDragging) return;
+    const newLeft = e.clientX - offsetX;
+    const newTop = e.clientY - offsetY;
+    popup.style.left = newLeft + "px";
+    popup.style.top = newTop + "px";
+    popup.style.right = "auto";
+  });
+
+  document.addEventListener("mouseup", function() {
+    isDragging = false;
+    document.body.style.userSelect = "";
+  });
+
+  closeBtn.addEventListener("click", function() {
+    popup.style.display = "none";
+  });
+})();
+
+function showPopup(title
