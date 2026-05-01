@@ -1,0 +1,10 @@
+1, 14, ENG, -, -, Proud of you
+2, 16, ENG, -, -, Keep on trying
+3, 17, ENG, -, -, You're doing well
+4, 12, ENG, -, -, Stay curious
+5, 26, ENG, -, -, You’re improving every day
+6, 28, ENG, -, -, Every attempt makes you stronger
+7, 32, ENG, -, -, Your mind is sharper than you think
+8, 22, ENG, -, -, You cracked it — well done
+9, 30, ENG, -, -, You learn something every attempt
+10, 18, ENG, -, -, Keep moving forward
