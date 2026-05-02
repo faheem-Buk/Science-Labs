@@ -2,54 +2,92 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faheem 2025 Science Lab</title>
-    <!-- Use the correct CSS path (same folder as main.js) -->
-    <link rel="stylesheet" href="js/CSS/main.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 30px;
+            color: #333;
+        }
+
+        .tools-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .tool {
+            margin: 20px;
+        }
+
+        .tool img {
+            width: 200px;   /* your current size — unchanged */
+            height: auto;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Founder’s Stamp -->
-    <div class="founder-stamp">
-        <img src="assets/images/main Faheem with 2025  .png" alt="Founder Stamp">
-        <div class="stamp-text">
-            <strong>Faheem</strong><br>
-            Year of Independence — 2025<br>
-            <em>Welcome. May your learning here enlighten your mind.</em>
+    <h1>Faheem 2025 Science Lab</h1>
+
+    <div class="tools-container">
+
+        <!-- Caesar English -->
+        <div class="tool">
+            <a href="tools/caesar_english.html">
+                <img src="assets/images/yourimage1.png" alt="Caesar English">
+            </a>
         </div>
-    </div>
 
-    <!-- Main Content -->
-    <div class="main-container">
-        <h1>Welcome to the Main Room</h1>
-        <p>Select a tool to begin your journey.</p>
-
-        <div class="tool-buttons">
-            <!-- Text buttons -->
-            <a href="tools/caesar_english.html" class="tool-btn">Caesar Cipher (English)</a>
-            <a href="tools/caesar_arabic.html" class="tool-btn">Caesar Cipher (Arabic)</a>
-            <a href="tools/column_trans_eng_v25.html" class="tool-btn">Column Transposition (English)</a>
-
-            <!-- Image buttons -->
+        <!-- Caesar Arabic -->
+        <div class="tool">
             <a href="tools/caesar_arabic.html">
-                <img src="assets/images/caesar_arabic.png"
-                     alt="Caesar Arabic Tool"
-                     style="width: 250px; cursor: pointer;">
-            </a>
-
-            <a href="tools/column_trans_eng_v25.html">
-                <img src="assets/images/column_trans_cipher.png"
-                     alt="Column Transposition English Tool"
-                     style="width: 250px; cursor: pointer;">
+                <img src="assets/images/yourimage2.png" alt="Caesar Arabic">
             </a>
         </div>
-    </div>
 
-    <footer>
-        <img src="assets/images/badge - official academic  .png"
-             alt="Dr. Faheem Buhatwa Signature"
-             style="width:300px;">
-    </footer>
+        <!-- Column Transposition English -->
+        <div class="tool">
+            <a href="tools/column_trans_eng_v25.html">
+                <img src="assets/images/yourimage1.png" alt="Column Transposition English">
+            </a>
+        </div>
+
+        <!-- Vigenere English -->
+        <div class="tool">
+            <a href="tools/Vigenere_cipher_english_V17.html">
+                <img src="assets/images/yourimage2.png" alt="Vigenere English">
+            </a>
+        </div>
+
+        <!-- Playfair English -->
+        <div class="tool">
+            <a href="tools/Playfair_cipher_English_V10.html">
+                <img src="assets/images/yourimage1.png" alt="Playfair English">
+            </a>
+        </div>
+
+        <!-- Playfair Arabic -->
+        <div class="tool">
+            <a href="tools/Playfair_cipher_Arabic.html">
+                <img src="assets/images/yourimage2.png" alt="Playfair Arabic">
+            </a>
+        </div>
+
+    </div>
 
 </body>
 </html>
