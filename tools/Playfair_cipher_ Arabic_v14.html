@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تمرين بلايفير بالعربية</title>
+  <style>
+    body { font-family: 'Amiri', serif; text-align: center; direction: rtl; }
+    .container { display: flex; justify-content: center; align-items: flex-start; margin-top: 20px; }
+    .side { display: flex; flex-direction: column; gap: 20px; }
+    table { border-collapse: collapse; margin: 0 40px; }
+    td {
+      border: 2px solid black;
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    input { font-size: 18px; width: 600px; margin: 10px; }
+    textarea { font-size: 18px; width: 200px; height: 100px; }
+  </style>
+</head>
+<body>
+  <h1>تمرين بلايفير بالعربية</h1>
+
+  <!-- الأبجدية -->
+  <h2>الأبجدية المستخدمة:</h2>
+  <p>
+    ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن هـ و ي  
+    أ إ آ ؤ ئ ء ة ى
+  </p>
+
+  <!-- كلمة السر والرسالة -->
+  <input type="text" value="كلمة السر">
+  <input type="text" value="الرسالة">
+
+  <!-- توزيع الجدول والصناديق -->
+  <div class="container">
+    <!-- الصناديق على اليمين -->
+    <div class="side">
+      <textarea placeholder="الرسالة المستلمة"></textarea>
+      <textarea placeholder="أزواج الحروف"></textarea>
+    </div>
+
+    <!-- الجدول في الوسط -->
+    <table id="matrix">
+      <tbody></tbody>
+    </table>
+
+    <!-- الصناديق على اليسار -->
+    <div class="side">
+      <textarea placeholder="الأزواج المشفرة"></textarea>
+      <textarea placeholder="الرسالة النهائية"></textarea>
+    </div>
+  </div>
+
+  <script>
+    // الأبجدية الكاملة (36 حرفًا)
+    const alphabet = [
+      "ا","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س",
+      "ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م",
+      "ن","هـ","و","ي","أ","إ","آ","ؤ","ئ","ء","ة","ى"
+    ];
+
+    // إنشاء الجدول 6×6 وملؤه بالأبجدية
+    const tbody = document.querySelector("#matrix tbody");
+    let index = 0;
+    for (let i=0; i<6; i++) {
+      const row = document.createElement("tr");
+      for (let j=0; j<6; j++) {
+        const cell = document.createElement("td");
+        cell.contentEditable = "true";
+        cell.innerText = alphabet[index++];
+        row.appendChild(cell);
+      }
+      tbody.appendChild(row);
+    }
+
+    // الانتقال التلقائي بين الخلايا
+    const cells = document.querySelectorAll("#matrix td");
+    cells.forEach((cell, index) => {
+      cell.addEventListener("input", () => {
+        if (cell.innerText.length > 1) {
+          cell.innerText = cell.innerText.slice(0,1);
+        }
+        if (cell.innerText.length === 1) {
+          let nextIndex = (index + 1) % cells.length;
+          cells[nextIndex].focus();
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
