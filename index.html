@@ -3,57 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faheem 2025 Science Lab</title>
+    <title>Science Lab Tools</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
             margin: 0;
-            padding: 0;
-            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            background: #0d1117;
+            color: white;
         }
 
         header {
-            background: #222;
-            color: white;
-            padding: 20px;
-            font-size: 28px;
-            font-weight: bold;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        header h1 {
+            font-size: 2.4rem;
+            font-weight: 600;
         }
 
         .tools-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 25px;
+            padding: 20px 40px;
         }
 
         .tool-card {
-            background: white;
-            width: 220px;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            transition: 0.2s;
+            background: #161b22;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+            border: 1px solid #30363d;
         }
 
         .tool-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+            transform: translateY(-5px);
+            border-color: #58a6ff;
         }
 
         .tool-card img {
-            width: 180px;
-            height: auto;
-            border-radius: 8px;
+            width: 80px;
+            margin-bottom: 15px;
+        }
+
+        .tool-card h3 {
+            margin: 10px 0;
+            font-size: 1.3rem;
         }
 
         .tool-card p {
-            margin-top: 10px;
-            font-size: 16px;
-            font-weight: bold;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Popup */
+        #popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #popup-content {
+            background: #161b22;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid #30363d;
+        }
+
+        #popup-content h2 {
+            margin-top: 0;
+        }
+
+        #close-popup {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #58a6ff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -61,43 +106,65 @@
 <body>
 
 <header>
-    Faheem 2025 Science Lab
+    <h1>Science Lab Tools</h1>
+    <p>Interactive tools to make learning science and engineering easier</p>
 </header>
 
 <div class="tools-container">
 
-            <!-- Image buttons -->
-    <!-- Caesars Cipher English  -->
-            <a href="../tools/caesar_eng.html">
-                <img src="../assets/images/caesar_eng.png"
-                     alt="Caesar Arabic Tool"
-                     style="width: 250px; cursor: pointer;">
-            </a>
-     <!-- Caesars Cipher Arabic  -->
-            <a href="../tools/caesar_arabic.html">
-                <img src="../assets/images/caesar_arabic.png"
-                     alt="Caesar Arabic Tool"
-                     style="width: 250px; cursor: pointer;">
-            </a>
-    <!-- Column Transposition Cipher Tool -->
+    <div class="tool-card" onclick="openTool('tools/columnar.html')">
+        <img src="assets/images/columnar.png" alt="Columnar Cipher">
+        <h3>Columnar Transposition</h3>
+        <p>Encrypt & decrypt using columnar transposition</p>
+    </div>
 
-            <a href="../tools/column_trans_eng_v25.html">
-                <img src="../assets/images/column_trans_cipher.png"
-                     alt="Column Transposition English Tool"
-                     style="width: 250px; cursor: pointer;">
-            </a>
+    <div class="tool-card" onclick="openTool('tools/caesar.html')">
+        <img src="assets/images/caesar.png" alt="Caesar Cipher">
+        <h3>Caesar Cipher</h3>
+        <p>Shift letters and decode messages</p>
+    </div>
 
-    
-    <!-- Column Transposition Cipher Tool -->
-    <div class="tool-card">
-        <a href="Column transpositin Eng html V22.html">
-           <img src="../assets/images/column_trans_example.png">
-                 alt="Column Transposition Cipher">
-        </a>
-        <p>Column Transposition Cipher</p>
+    <div class="tool-card" onclick="openTool('tools/vigenere.html')">
+        <img src="assets/images/vigenere.png" alt="Vigenere Cipher">
+        <h3>Vigenère Cipher</h3>
+        <p>Encrypt using repeating-key substitution</p>
+    </div>
+
+    <div class="tool-card" onclick="openPopup()">
+        <img src="assets/images/help.png" alt="Help">
+        <h3>Help</h3>
+        <p>How to use the tools</p>
     </div>
 
 </div>
+
+<!-- Popup -->
+<div id="popup">
+    <div id="popup-content">
+        <h2>How to Use Science Lab Tools</h2>
+        <p>Select any tool to begin. Each tool includes:</p>
+        <ul>
+            <li>Interactive inputs</li>
+            <li>Step-by-step explanations</li>
+            <li>Instant encryption/decryption</li>
+        </ul>
+        <button id="close-popup" onclick="closePopup()">Close</button>
+    </div>
+</div>
+
+<script>
+    function openTool(path) {
+        window.location.href = path;
+    }
+
+    function openPopup() {
+        document.getElementById("popup").style.display = "flex";
+    }
+
+    function closePopup() {
+        document.getElementById("popup").style.display = "none";
+    }
+</script>
 
 </body>
 </html>
