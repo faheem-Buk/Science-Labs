@@ -1,104 +1,56 @@
-<!DOCTYPE html>
+
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faheem 2025 Science Lab</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
-
-        h1 {
-            margin-top: 30px;
-            color: #333;
-        }
-
-        .tools-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 40px;
-        }
-
-        .tool {
-            margin: 20px;
-        }
-
-        .tool img {
-            width: 200px;   /* your current size — unchanged */
-            height: auto;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-    </style>
+    <!-- Use the correct CSS path (same folder as main.js) -->
+    <link rel="stylesheet" href="js/CSS/main.css">
 </head>
 
 <body>
 
-    <h1>Faheem 2025 Science Lab</h1>
-
-
-<table border="1" style="width:100%; text-align:center;">
-    <tr>
-        <td><img src="assets/images/caesar_arabic.png" width="120"></td>
-        <td><img src="assets/images/column_trans_cipher.png" width="120"></td>
-    </tr>
-</table>
-
-
-
-    
-    <div class="tools-container">
-
-        <!-- Caesar English -->
-        <div class="tool">
-            <a href="tools/caesar_english.html">
-                <img src="assets/images/column_trans_cipher.png" alt="Caesar English"  width="100" height="100">
-            </a>
+    <!-- Founder’s Stamp -->
+    <div class="founder-stamp">
+        <img src="assets/images/main Faheem with 2025  .png" alt="Founder Stamp">
+        <div class="stamp-text">
+            <strong>Faheem</strong><br>
+            Year of Independence — 2025<br>
+            <em>Welcome. May your learning here enlighten your mind.</em>
         </div>
-
-        <!-- Caesar Arabic -->
-        <div class="tool">
-            <a href="tools/caesar_arabic.html">
-                <img src="assets/images/caesar_arabic.png" alt="Caesar Arabic" width="100" height="100">
-            </a>
-        </div>
-
-        <!-- Column Transposition English -->
-        <div class="tool">
-            <a href="tools/column_trans_eng_v25.html">
-                <img src="assets/images/column_trans_cipher.png" alt="Column Transposition English" width="100" height="100">
-            </a>
-        </div>
-
-        <!-- Vigenere English -->
-        <div class="tool">
-            <a href="tools/vigenere_cipher_english_v17.html">
-                <img src="assets/images/caesar_arabic.png" alt="Vigenere English" width="100" height="100">
-            </a>
-        </div>
-
-        <!-- Playfair English -->
-        <div class="tool">
-            <a href="tools/playfair_cipher_english_v10.html">
-                <img src="assets/images/column_trans_cipher.png" alt="Playfair English" width="100" height="100">
-            </a>
-        </div>
-
-        <!-- Playfair Arabic -->
-        <div class="tool">
-            <a href="tools/playfair_cipher_arabic_v14.html">
-                <img src="assets/images/caesar_arabic.png" alt="Playfair Arabic" width="100" height="100">
-            </a>
-        </div>
-
     </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <h1>Welcome to the Main Room</h1>
+        <p>Select a tool to begin your journey.</p>
+
+        <div class="tool-buttons">
+            <!-- Text buttons -->
+            <a href="tools/caesar_english.html" class="tool-btn">Caesar Cipher (English)</a>
+            <a href="tools/caesar_arabic.html" class="tool-btn">Caesar Cipher (Arabic)</a>
+            <a href="tools/column_trans_eng_v25.html" class="tool-btn">Column Transposition (English)</a>
+
+            <!-- Image buttons -->
+            <a href="tools/caesar_arabic.html">
+                <img src="assets/images/caesar_arabic.png"
+                     alt="Caesar Arabic Tool"
+                     style="width: 250px; cursor: pointer;">
+            </a>
+
+            <a href="tools/column_trans_eng_v25.html">
+                <img src="assets/images/column_trans_cipher.png"
+                     alt="Column Transposition English Tool"
+                     style="width: 250px; cursor: pointer;">
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <img src="assets/images/badge - official academic  .png"
+             alt="Dr. Faheem Buhatwa Signature"
+             style="width:300px;">
+    </footer>
 
 </body>
 </html>
