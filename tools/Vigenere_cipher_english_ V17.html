@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vigenere Cipher Work Sheet</title>
+
+<style>
+    body {
+        font-family: system-ui, sans-serif;
+        padding: 16px;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        font-size: 22px;
+        text-align: center;
+    }
+
+    /* HELP BUTTON */
+    #helpBtn {
+        padding: 6px 12px;
+        font-size: 14px;
+        background: #d9eaff;
+        border: 1px solid #7aa7d9;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-bottom: 12px;
+    }
+
+    /* HELP MODAL */
+    #helpModal {
+        display:none;
+        position:fixed;
+        top:20%;
+        left:50%;
+        transform:translateX(-50%);
+        background:white;
+        padding:15px;
+        border:1px solid #aaa;
+        width:360px;
+        border-radius:8px;
+        box-shadow:0 0 10px rgba(0,0,0,0.2);
+        z-index: 9999;
+    }
+
+    #helpModal button {
+        margin-top:10px;
+        padding:6px 12px;
+    }
+
+    /* GLOBAL TABLE BORDER FIX */
+    table {
+        border-collapse: collapse !important;
+        table-layout: fixed !important;
+        margin-bottom: 16px;
+    }
+
+    th, td {
+        border: 1px solid #444 !important;
+    }
+
+    /* UPPER TABLE WIDTHS */
+    #upper-table {
+        min-width: 864px !important;
+    }
+
+    #upper-table col.title-col {
+        width: 192px !important;
+    }
+
+    #upper-table col.narrow {
+        width: 32px !important;
+    }
+
+    /* LOWER TABLE WIDTHS */
+    #lower-table {
+        min-width: 864px !important;
+    }
+
+    #lower-table col.lower-first {
+        width: 32px !important;
+    }
+
+    #lower-table col.narrow {
+        width: 32px !important;
+    }
+
+    /* CELL STYLES */
+    .label-cell {
+        background: #f0f0f0;
+        font-weight: bold;
+        text-align: right;
+        padding-right: 6px;
+    }
+
+    .char-cell {
+        width: 100%;
+        border: none;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .char-cell:focus {
+        outline: 1px solid #0078d4;
+    }
+
+    .row-label {
+        background: #f0f0f0;
+        font-size: 12px;
+        text-align: center;
+    }
+
+    #lower-table td:not(.row-label) {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    #lower-table tbody tr.selected {
+        background-color: #ffff99;
+    }
+
+    .controls button {
+        padding: 4px 10px;
+        margin-right: 6px;
+        font-size: 12px;
+    }
+
+    #hLine {
+        position: absolute;
+        height: 6px;
+        background-color: red;
+    }
+
+    #vLine {
+        position: absolute;
+        width: 6px;
+        background-color: blue;
+    }
+</style>
+
+</head>
+
+<body>
+
+<h1>Vigenere Cipher Work Sheet</h1>
+
+<!-- HELP BUTTON -->
+<button id="helpBtn" onclick="showHelp()">Help</button>
+
+<!-- HELP MODAL -->
+<div id="helpModal">
+    <div id="helpText">
+        <!-- ✨ ضع نص التعليمات هنا يا فهيم ✨ -->
+        Line 1 of help instructions  
+        Line 2 of help instructions
+    </div>
+    <button onclick="hideHelp()">Close</button>
+</div>
+
+<!-- UPPER TABLE -->
+<table id="upper-table">
+    <colgroup>
+        <col class="title-col">
+        <col span="21" class="narrow">
+    </colgroup>
+
+    <!-- PASSWORD ROW -->
+    <tr>
+        <td class="label-cell">Password</td>
+        <script>
+            for (let i = 0; i < 21; i++) {
+                document.write(`<td><input class="char-cell upper-input" data-row="0" data-col="${i}" maxlength="1"></td>`);
+            }
+        </script>
+    </tr>
+
+    <!-- INPUT MESSAGE ROW -->
+    <tr>
+        <td class="label-cell">Input Message</td>
+        <script>
+            for (let i = 0; i < 21; i++) {
+                document.write(`<td><input class="char-cell upper-input" data-row="1" data-col="${i}" maxlength="1"></td>`);
+            }
+        </script>
+    </tr>
+
+    <!-- RESULT MESSAGE ROW -->
+    <tr>
+        <td class="label-cell">Result Message</td>
+        <script>
+            for (let i = 0; i < 21; i++) {
+                document.write(`<td><input class="char-cell upper-input" data-row="2" data-col="${i}" maxlength="1"></td>`);
+            }
+        </script>
+    </tr>
+</table>
+
+<!-- LOWER TABLE -->
+<table id="lower-table">
+    <colgroup>
+        <col class="lower-first">
+        <col class="narrow" span="26">
+    </colgroup>
+
+    <thead>
+        <tr>
+            <th></th>
+            <script>
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(l => {
+                    document.write(`<th>${l}</th>`);
+                });
+            </script>
+        </tr>
+    </thead>
+
+    <tbody>
+        <script>
+            for (let r = 1; r <= 15; r++) {
+                document.write(`<tr data-row="${r}"><td class="row-label">${r}</td>`);
+                for (let c = 0; c < 26; c++) {
+                    document.write(`<td>&nbsp;</td>`);
+                }
+                document.write(`</tr>`);
+            }
+        </script>
+    </tbody>
+</table>
+
+<!-- Lines -->
+<div id="hLine"></div>
+<div id="vLine"></div>
+
+<!-- CONTROLS -->
+<div class="controls">
+    <button id="btn-init-row">Initiate Row</button>
+    <button id="shift-right">◀ Shift Left</button>
+    <button id="shift-left">Right ▶</button>
+    <button id="btn-clear-lower">Clear Lower Table</button>
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+/* -------------------------
+   HELP FUNCTIONS
+------------------------- */
+function showHelp() {
+    document.getElementById("helpModal").style.display = "block";
+}
+function hideHelp() {
+    document.getElementById("helpModal").style.display = "none";
+}
+
+/* -------------------------
+   ORIGINAL SCRIPT (unchanged)
+------------------------- */
+
+    /* AUTO-ADVANCE IN UPPER TABLE */
+    const upperInputs = [...document.querySelectorAll('.upper-input')];
+
+    upperInputs.forEach(input => {
+        input.addEventListener('input', e => {
+            if (e.target.value.length === 1) {
+                const row = +e.target.dataset.row;
+                const col = +e.target.dataset.col;
+                const next = upperInputs.find(
+                    x => +x.dataset.row === row && +x.dataset.col === col + 1
+                );
+                if (next) next.focus();
+            }
+        });
+    });
+
+    /* ROW SELECTION IN LOWER TABLE */
+    document.querySelector('#lower-table tbody')
+        .addEventListener('click', e => {
+            const tr = e.target.closest('tr');
+            if (!tr) return;
+
+            document.querySelectorAll('#lower-table tbody tr')
+                .forEach(row => row.classList.remove('selected'));
+
+            tr.classList.add('selected');
+        });
+
+    /* INITIATE ROW (A–Z) */
+    document.getElementById('btn-init-row').onclick = () => {
+        const selected = document.querySelector('#lower-table tbody tr.selected');
+        if (!selected) return;
+
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+        const cells = selected.querySelectorAll('td:not(.row-label)');
+        cells.forEach((td, i) => {
+            td.textContent = alphabet[i];
+        });
+    };
+
+    /* SHIFT ONLY THE SELECTED ROW */
+    function shift(dir) {
+        const selected = document.querySelector('#lower-table tbody tr.selected');
+        if (!selected) return;
+
+        const cells = [...selected.querySelectorAll('td:not(.row-label)')];
+        const values = cells.map(td => td.textContent);
+
+        if (dir === 'left') {
+            values.push(values.shift());
+        } else {
+            values.unshift(values.pop());
+        }
+
+        cells.forEach((td, i) => td.textContent = values[i]);
+    }
+
+    document.getElementById('shift-left').onclick  = () => shift('left');
+    document.getElementById('shift-right').onclick = () => shift('right');
+
+    /* CLEAR LOWER TABLE — FIXED */
+    document.getElementById('btn-clear-lower').onclick = () => {
+        const cells = document.querySelectorAll('#lower-table tbody td:not(.row-label)');
+        cells.forEach(td => td.innerHTML = "&nbsp;");
+        positionLines(); // keep lines aligned after clearing
+    };
+
+    /* LINE POSITION + MOVEMENT */
+    let hTop = 0;
+    let vLeft = 0;
+
+    function positionLines() {
+        const table = document.getElementById("lower-table");
+        const rect = table.getBoundingClientRect();
+
+        const hLine = document.getElementById("hLine");
+        hLine.style.top = (rect.bottom + 5) + "px";
+        hLine.style.left = rect.left + "px";
+        hLine.style.width = rect.width + "px";
+
+        const vLine = document.getElementById("vLine");
+        vLine.style.top = rect.top + "px";
+        vLine.style.left = (rect.right + 5) + "px";
+        vLine.style.height = rect.height + "px";
+
+        hTop = parseInt(hLine.style.top);
+        vLeft = parseInt(vLine.style.left);
+    }
+
+    window.onload = positionLines;
+
+    /* ARROW KEY MOVEMENT WITH LIMITS */
+    document.addEventListener("keydown", function(event) {
+        const hLine = document.getElementById("hLine");
+        const vLine = document.getElementById("vLine");
+
+        const table = document.getElementById("lower-table");
+        const rect = table.getBoundingClientRect();
+
+        const minH = rect.top - 20;
+        const maxH = rect.bottom + 20;
+
+        const minV = rect.left - 20;
+        const maxV = rect.right + 20;
+
+        switch(event.key) {
+            case "ArrowUp":
+                if (hTop > minH) {
+                    hTop -= 10;
+                    hLine.style.top = hTop + "px";
+                }
+                break;
+
+            case "ArrowDown":
+                if (hTop < maxH) {
+                    hTop += 10;
+                    hLine.style.top = hTop + "px";
+                }
+                break;
+
+            case "ArrowLeft":
+                if (vLeft > minV) {
+                    vLeft -= 10;
+                    vLine.style.left = vLeft + "px";
+                }
+                break;
+
+            case "ArrowRight":
+                if (vLeft < maxV) {
+                    vLeft += 10;
+                    vLine.style.left = vLeft + "px";
+                }
+                break;
+        }
+    });
+</script>
+
+</body>
+</html>
