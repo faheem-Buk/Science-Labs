@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Playfair Cipher – Decrypt (Practice Worksheet)</title>
+
+<style>
+  body {
+    font-family: sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem 3rem;
+    line-height: 1.5;
+  }
+
+  h1, h2 {
+    margin-top: 1.5rem;
+  }
+
+  .step {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 6px;
+    background: #fafafa;
+  }
+
+  textarea, input[type="text"] {
+    width: 100%;
+    padding: 0.4rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+
+  /* Fixed, always-visible borders for the Playfair table */
+  .playfair-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 3px solid #000;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+  }
+
+  .playfair-table td {
+    border: 3px solid #000;
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    background: #fff;
+  }
+
+  .playfair-table input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    text-align: center;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    background: transparent;
+  }
+</style>
+</head>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Playfair Cipher – Decrypt (Practice Worksheet)</title>
+
+<style>
+  body {
+    font-family: sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem 3rem;
+    line-height: 1.5;
+  }
+
+  h1, h2 {
+    margin-top: 1.5rem;
+  }
+
+  .step {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 6px;
+    background: #fafafa;
+  }
+
+  textarea, input[type="text"] {
+    width: 100%;
+    padding: 0.4rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+
+  /* Fixed, always-visible borders for the Playfair table */
+  .playfair-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 3px solid #000;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+  }
+
+  .playfair-table td {
+    border: 3px solid #000;
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    background: #fff;
+  }
+
+  .playfair-table input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    text-align: center;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    background: transparent;
+  }
+
+  /* HELP BUTTON */
+  #helpBtn {
+    padding: 6px 12px;
+    font-size: 14px;
+    background: #d9eaff;
+    border: 1px solid #7aa7d9;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+
+  /* HELP MODAL */
+  #helpModal {
+    display:none;
+    position:fixed;
+    top:20%;
+    left:50%;
+    transform:translateX(-50%);
+    background:white;
+    padding:15px;
+    border:1px solid #aaa;
+    width:360px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+    z-index: 9999;
+  }
+
+  #helpModal button {
+    margin-top:10px;
+    padding:6px 12px;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Playfair Cipher – Decrypt (Practice Worksheet)</h1>
+
+<!-- HELP BUTTON -->
+<button id="helpBtn" onclick="showHelp()">Help</button>
+
+<!-- HELP MODAL -->
+<div id="helpModal">
+  <div id="helpText">
+    <!-- ✨ ضع نص التعليمات هنا يا فهيم ✨ -->
+    Line 1 of help instructions  
+    Line 2 of help instructions
+  </div>
+  <button onclick="hideHelp()">Close</button>
+</div>
+
+<!-- STEP 1 -->
+<div class="step">
+  <h2>Step 1 – Enter Ciphertext and Password</h2>
+  <p>Write the ciphertext you want to decrypt and the password used to build the Playfair table.</p>
+
+  <label>Ciphertext</label>
+  <textarea></textarea>
+
+  <label>Password</label>
+  <input type="text">
+</div>
+
+<!-- STEP 2 -->
+<div class="step">
+  <h2>Step 2 – Build the Playfair Table</h2>
+  <p>Fill the 5×5 table according to the password, removing duplicates and applying the I/J rule.</p>
+
+  <table class="playfair-table">
+    <tbody>
+      <tr>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+      </tr>
+      <tr>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+      </tr>
+      <tr>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+      </tr>
+      <tr>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+      </tr>
+      <tr>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+        <td><input maxlength="1" value=" "></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- STEP 3 -->
+<div class="step">
+  <h2>Step 3 – Rewrite Ciphertext into Pairs</h2>
+  <p>Rewrite the ciphertext as digraphs (pairs of letters). For decryption, no need to insert X’s.</p>
+
+  <textarea placeholder="Example: AB CD EF GH ..."></textarea>
+</div>
+
+<!-- STEP 4 -->
+<div class="step">
+  <h2>Step 4 – Write the Final Decrypted Message</h2>
+  <p>After decrypting all pairs, write your final plaintext here.</p>
+
+  <textarea placeholder="Final decrypted message..."></textarea>
+</div>
+
+<script>
+/* -------------------------
+   HELP FUNCTIONS
+------------------------- */
+function showHelp() {
+  document.getElementById("helpModal").style.display = "block";
+}
+function hideHelp() {
+  document.getElementById("helpModal").style.display = "none";
+}
+</script>
+
+</body>
+</html>
