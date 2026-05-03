@@ -108,16 +108,7 @@
 
 <body>
 
-  <div class="top-bar">
-  
-    <div class="top-buttons">
-      <button onclick="openHelp()">Help</button>
-      <button onclick="openMessage()">Teacher Messages</button>
-      <button onclick="checkMyWork(document.getElementById('cipher').value)">Check My Work</button>
-      <button onclick="openSignature()">Cipher Image</button>
-    </div>
-  </div>
-
+<div class="top-bar">
   <div class="container">
 
     <div class="left-panel">
@@ -151,7 +142,6 @@
         </div>
       </div>
 
-
       <div class="controls">
         <button class="wideBtn" onclick="fillRows()">Fill table Row by Row</button>
         <button class="wideBtn" onclick="enableColumnClickModeDecrypt()">Fill table Column by Column</button>
@@ -171,57 +161,55 @@
         <button class="wideBtn" onclick="clearFinalMessage()">Clear Final Message</button>
       </div>
 
-      
- <div id="fourButtons">
-    <button class="miniBtn">H</button>
-    <button class="miniBtn">A</button>
-    <button class="miniBtn">B</button>
-    <button class="miniBtn" id="btnReturn">Return to Main Room</button>
-    <div id="returnWhisper">I will bring you back</div>
-</div>
+      <div id="fourButtons">
+        <button class="miniBtn">H</button>
+        <button class="miniBtn">A</button>
+        <button class="miniBtn">B</button>
+        <button class="miniBtn" id="btnReturn">Return to Main Room</button>
+        <div id="returnWhisper">I will bring you back</div>
+      </div>
 
+      <div id="sigLinksRow">
 
- 
-     <div id="sigLinksRow">
+        <div class="sigCell">
+          <img src="signature.png" id="signatureImg" alt="Signature">
+        </div>
 
-    <div class="sigCell">
-        <img src="signature.png" id="signatureImg" alt="Signature">
-    </div>
+        <div class="linksCell">
+          <h3 class="linksTitle">Links to Videos</h3>
+          <textarea id="videoLinks"></textarea>
 
+          <div id="linksList"></div>
 
+          <div id="quickExample">
+            <a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank">
+              A quick Column Transposition cipher example
+            </a>
+          </div>
+        </div>
 
-<div class="linksCell">
-    <h3 class="linksTitle">Links to Videos</h3>
-    <textarea id="videoLinks"></textarea>
+      </div>
 
-    <!-- ADD THIS LINE BELOW -->
-    <div id="linksList"></div>
-
-<div id="quickExample">
-    <a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank">
-        A quick Column Transposition cipher example
-    </a>
-</div>
-
-  
-</div>
-
-           
-           
-           <h3>Rough Work Notes</h3>
+      <h3>Rough Work Notes</h3>
       <textarea id="notes" style="height:70px;"></textarea>
 
-
+    </div> <!-- end .left-panel -->
 
     <div class="right-panel">
       <h3 style="margin-top:0;">Key Row</h3>
-      <table id="keyRow"><tbody></tbody></table>
+      <table id="keyRow">
+        <tbody></tbody>
+      </table>
 
       <h3 style="margin-top:6px;">Matrix</h3>
-      <table id="matrix"><tbody></tbody></table>
-    </div>
+      <table id="matrix">
+        <tbody></tbody>
+      </table>
+    </div> <!-- end .right-panel -->
 
-  </div>
+  </div> <!-- end .container -->
+</div> <!-- end .top-bar -->
+
 
 <script>
 /* ============================================================
