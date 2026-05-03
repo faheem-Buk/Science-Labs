@@ -1,129 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cryptography Tools</title>
+<!-- saved from url=(0042)https://faheem-buk.github.io/Science-Labs/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Faheem 2025 Science Lab</title>
+    <link rel="stylesheet" href="./Faheem 2025 Science Lab display all 6 image   _files/main.css">
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
+        /* --- Layout improvements for the 6 images --- */
+
+        .tool-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            justify-items: center;
+            margin-top: 30px;
         }
-        header {
-            background-color: #333;
-            color: white;
-            padding: 20px;
+
+        .tool-buttons img {
+            width: 250px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .tool-buttons img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 12px rgba(0,0,0,0.25);
+        }
+
+        /* Text under each image */
+        .tool-label {
             text-align: center;
-        }
-        .welcome-section {
-            text-align: center;
-            padding: 20px;
-        }
-        .welcome-section img {
-            width: 200px;
-            border-radius: 10px;
-        }
-        .signature-section {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .signature-section img {
-            width: 180px;
-            margin: 10px;
-        }
-        .tool-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 20px;
-        }
-        .tool-card {
-            background-color: white;
-            width: 280px;
-            margin: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            overflow: hidden;
-            text-align: center;
-            transition: 0.3s;
-        }
-        .tool-card:hover {
-            transform: translateY(-5px);
-        }
-        .tool-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-        .tool-card h3 {
-            padding: 15px 0;
-        }
-        .tool-card a {
-            display: block;
-            padding: 12px;
-            background-color: #333;
-            color: white;
-            text-decoration: none;
+            margin-top: 8px;
+            font-size: 18px;
             font-weight: bold;
+            color: #222;
+            cursor: pointer;
         }
-        .tool-card a:hover {
-            background-color: #555;
+
+        .tool-link {
+            text-decoration: none;
+            color: inherit;
         }
     </style>
+
 </head>
+
 <body>
 
-<header>
-    <h1>Cryptography Tools</h1>
-</header>
-
-<div class="welcome-section">
-    <img src="welcome_image.png" alt="Welcome Image">
-    <h2>Welcome to the Cryptography Tools Hub</h2>
-    <p>Your one-stop platform for classical cipher tools and learning resources.</p>
-</div>
-
-<div class="signature-section">
-    <img src="signature1.png" alt="Signature 1">
-    <img src="signature2.png" alt="Signature 2">
-</div>
-
-<div class="tool-container">
-
-    <div class="tool-card">
-        <img src="caesar_english.png" alt="Caesar Cipher English">
-        <h3>Caesar Cipher (English)</h3>
-        <a href="caesar.html">Open Tool</a>
+    <!-- Founder’s Stamp -->
+    <div class="founder-stamp">
+        <img src="./Faheem 2025 Science Lab display all 6 image   _files/main Faheem with 2025  .png" alt="Founder Stamp">
+        <div class="stamp-text">
+            <strong>Faheem</strong><br>
+            Year of Independence — 2025<br>
+            <em>Welcome. May your learning here enlighten your mind.</em>
+        </div>
     </div>
 
-    <div class="tool-card">
-        <img src="vigenere.png" alt="Vigenere Cipher">
-        <h3>Vigenère Cipher</h3>
-        <a href="vigenere.html">Open Tool</a>
+    <!-- Main Content -->
+    <div class="main-container">
+        <h1>Welcome to the Main Room</h1>
+        <p>Select a tool to begin your journey.</p>
+
+        <div class="tool-buttons">
+
+            <!--
+            <a href="https://faheem-buk.github.io/Science-Labs/tools/caesar_english.html" class="tool-btn">Caesar Cipher (English)</a>
+            <a href="https://faheem-buk.github.io/Science-Labs/tools/caesar_arabic.html" class="tool-btn">Caesar Cipher (Arabic)</a>
+            <a href="https://faheem-buk.github.io/Science-Labs/tools/column_trans_eng_v25.html" class="tool-btn">Column Transposition (English)</a>
+            -->
+
+            <!-- 1. Caesar English -->
+            <a class="tool-link" href="https://faheem-buk.github.io/Science-Labs/tools/caesar_english.html">
+                <img src="./Faheem 2025 Science Lab display all 6 image   _files/caesar_english.png" alt="Caesar English Tool">
+                <div class="tool-label">Caesar Cipher (English)</div>
+            </a>
+
+            <!-- 2. Caesar Arabic -->
+            <a class="tool-link" href="https://faheem-buk.github.io/Science-Labs/tools/caesar_arabic.html">
+                <img src="./Faheem 2025 Science Lab display all 6 image   _files/caesar_arabic.png" alt="Caesar Arabic Tool">
+                <div class="tool-label">Caesar Cipher (Arabic)</div>
+            </a>
+
+            <!-- 3. Column Transposition -->
+            <a class="tool-link" href="https://faheem-buk.github.io/Science-Labs/tools/column_trans_eng_v25.html">
+                <img src="./Faheem 2025 Science Lab display all 6 image   _files/column_trans_cipher.png" alt="Column Transposition Tool">
+                <div class="tool-label">Column Transposition (English)</div>
+            </a>
+
+            <!-- 4. Vigenere English -->
+            <a class="tool-link" href="https://faheem-buk.github.io/Science-Labs/tools/vigenere_cipher_english_v17.html">
+                <img src="./Faheem 2025 Science Lab display all 6 image   _files/vigenere.png" alt="Vigenere Cipher English Tool">
+                <div class="tool-label">Vigenère Cipher (English)</div>
+            </a>
+
+            <!-- 5. Playfair English -->
+            <a class="tool-link" href="https://faheem-buk.github.io/Science-Labs/tools/playfair_cipher_english_v10.html">
+                <img src="./Faheem 2025 Science Lab display all 6 image   _files/playfair_english.png" alt="Playfair Cipher English Tool">
+                <div class="tool-label">Playfair Cipher (English)</div>
+            </a>
+
+            <!-- 6. Playfair Arabic -->
+            <a class="tool-link" href="https://faheem-buk.github.io/Science-Labs/tools/playfair_cipher_arabic_v14.html">
+                <img src="./Faheem 2025 Science Lab display all 6 image   _files/playfair_arabic.png" alt="Playfair Cipher Arabic Tool">
+                <div class="tool-label">Playfair Cipher (Arabic)</div>
+            </a>
+
+        </div>
     </div>
 
-    <div class="tool-card">
-        <img src="playfair_english.png" alt="Playfair English">
-        <h3>Playfair Cipher (English)</h3>
-        <a href="playfair_english.html">Open Tool</a>
-    </div>
+    <footer>
+        <img src="./Faheem 2025 Science Lab display all 6 image   _files/badge - official academic  .png" alt="Dr. Faheem Buhatwa Signature" style="width:300px;">
+    </footer>
 
-    <div class="tool-card">
-       <img src="playfair_arabic.png" alt="Playfair Arabic">
-       <h3>Playfair Cipher (Arabic)</h3>
-       <a href="playfair_arabic.html">Open Tool</a>
-    </div>
-
-    <div class="tool-card">
-    <img src="column_trans_cipher.png" alt="Columnar Transposition English">
-    <h3>Columnar Transposition (English)</h3>
-    <a href="column_trans_eng_v25.html">Open Tool</a>
-</div>
-
-    
-
-
-</body>
-</html>
+</body></html>
