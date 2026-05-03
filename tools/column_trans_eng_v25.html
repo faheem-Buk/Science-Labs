@@ -1,608 +1,635 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  
+    <meta charset="UTF-8">
+    <title>Columnar Transposition Cipher – English v25</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --bg: #0b1020;
+            --card: #151a2c;
+            --accent: #3fa9f5;
+            --accent-soft: rgba(63,169,245,0.18);
+            --text: #f5f7ff;
+            --muted: #a4acc4;
+            --danger: #ff6b6b;
+            --border: #252b40;
+            --radius: 10px;
+            --shadow: 0 14px 40px rgba(0,0,0,0.55);
+            --mono: "Fira Code", Consolas, monospace;
+            --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
 
-<div style="display:flex; align-items:center; justify-content:flex-start; margin-bottom:10px;">
-    <h1 style="margin:0; padding:0;">
-        Column Transposition Cipher
-    </h1>
+        * {
+            box-sizing: border-box;
+        }
 
-    <button onclick="openHelp()" style="margin-left:20px; padding:6px 12px;">
-        Help
-    </button>
-</div>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: var(--sans);
+            background: radial-gradient(circle at top, #1b2340 0, #050814 55%, #02030a 100%);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
+        .app {
+            width: 100%;
+            max-width: 1100px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: var(--shadow);
+            padding: 22px 22px 18px;
+            backdrop-filter: blur(18px);
+        }
 
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
 
+        .title-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
 
-  
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
+        .title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
 
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
+        .subtitle {
+            font-size: 0.82rem;
+            color: var(--muted);
+        }
 
-    .top-buttons button {
-      margin-left: 6px;
-    }
+        .mode-toggle {
+            display: inline-flex;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: rgba(5,8,20,0.9);
+            overflow: hidden;
+        }
 
-    .container {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-    }
+        .mode-btn {
+            padding: 6px 14px;
+            font-size: 0.8rem;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
 
-    .left-panel { width: 45%; }
-    .right-panel { width: 55%; }
+        .mode-btn.active {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
 
-    label { display: inline-block; margin-bottom: 2px; }
-    input[type="text"] { width: 100%; box-sizing: border-box; }
-    textarea { width: 100%; box-sizing: border-box; margin-top: 0; }
+        .grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+            gap: 16px;
+        }
 
-    h3 {
-      font-size: 18px;
-      margin-top: 6px;
-      margin-bottom: 4px;
-    }
+        @media (max-width: 880px) {
+            .grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
 
-    .controls { margin: 4px 0; }
-    button { margin: 2px; }
+        .card {
+            background: rgba(5,8,20,0.92);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 14px 14px 12px;
+        }
 
-    button.wideBtn {
-      width: 240px;
-    }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
 
-    table { border-collapse: collapse; margin-top: 4px; }
-    th, td {
-      border: 1px solid #000;
-      width: 30px;
-      height: 26px;
-      text-align: center;
-      font-size: 16px;
-    }
+        .card-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
 
-    .key-label { color: red; font-weight: bold; }
+        .hint {
+            font-size: 0.72rem;
+            color: var(--muted);
+        }
 
-  .linksCell {
-    width: 60%;
-}
+        label {
+            display: block;
+            font-size: 0.78rem;
+            margin-bottom: 4px;
+            color: var(--muted);
+        }
 
-.linksTitle {
-    margin: 0 0 4px 0;
-    font-size: 16px;
-    font-weight: bold;
-}
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            resize: vertical;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #050814;
+            color: var(--text);
+            padding: 8px 9px;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            outline: none;
+        }
 
-#videoLinks {
-    width: 100%;
-    height: 90px;
-    border: 1px solid #444;
-    border-radius: 6px;
-    padding: 6px;
-    resize: vertical;
-}
+        textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px rgba(63,169,245,0.4);
+        }
 
-#returnWhisper {
-    font-size: 12px;
-    color: #666;
-    margin-top: 4px;
-    margin-left: 4px;
-    font-style: italic;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+            align-items: center;
+        }
 
-#btnReturn:hover + #returnWhisper {
-    opacity: 1;
-}
-/* EMERGENCY FIX — FORCE TWO COLUMNS ONLY */
-#mainContainer, .container, body {
-  display: flex !important;
-  flex-direction: row !important;
-  width: 100% !important;
-  gap: 20px !important;
-}
+        .field {
+            flex: 1;
+            min-width: 140px;
+        }
 
-/* LEFT PANEL — FIXED WIDTH, WIDE */
-.left-panel {
-  width: 700px !important;
-  min-width: 700px !important;
-  max-width: 700px !important;
-}
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: #050814;
+            color: var(--text);
+            padding: 6px 10px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            outline: none;
+        }
 
-/* RIGHT PANEL — FIXED WIDTH */
-.right-panel {
-  width: 350px !important;
-  min-width: 350px !important;
-  max-width: 350px !important;
-}
+        input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px rgba(63,169,245,0.4);
+        }
 
-/* STOP ANY THIRD COLUMN FROM FORMING */
-.left-panel, .right-panel {
-  display: block !important;
-  float: none !important;
-}
+        .btn-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
 
-  
-  </style>
+        button {
+            border-radius: 999px;
+            border: none;
+            padding: 7px 14px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.18s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #020308;
+        }
+
+        .btn-primary:hover {
+            filter: brightness(1.08);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .pill {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        .pill-strong {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        .output-box {
+            background: #050814;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            padding: 8px 9px;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            min-height: 120px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: var(--muted);
+        }
+
+        .status-bar span strong {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .error {
+            color: var(--danger);
+        }
+
+        .table-wrapper {
+            margin-top: 10px;
+            max-height: 220px;
+            overflow: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #050814;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--mono);
+            font-size: 0.75rem;
+        }
+
+        th, td {
+            border: 1px solid #20263a;
+            padding: 4px 6px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        th {
+            background: #101528;
+            color: var(--accent);
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .footer {
+            margin-top: 10px;
+            font-size: 0.7rem;
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
-
 <body>
-<div class="top-bar">
-  <div class="container">
-
-  <div class="left-panel">
-
-    <h1>Transposition Cipher Tool</h1>
-
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-      <label for="message">Plaintext or Ciphered Text</label>
-      <span id="msgLength">Message length (not counting spaces): 0</span>
+<div class="app">
+    <div class="header">
+        <div class="title-block">
+            <div class="title">Columnar Transposition Cipher – English v25</div>
+            <div class="subtitle">
+                Clean implementation for your cryptography tools hub – supports encrypt & decrypt with keyword-based column order.
+            </div>
+        </div>
+        <div class="mode-toggle" aria-label="Mode toggle">
+            <button class="mode-btn active" data-mode="encrypt">Encrypt</button>
+            <button class="mode-btn" data-mode="decrypt">Decrypt</button>
+        </div>
     </div>
 
-    <input type="text" id="message" oninput="updateMessageLength()">
+    <div class="grid">
+        <!-- Left: Input -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Input</div>
+                <div class="pill pill-strong">English • A–Z only (internally)</div>
+            </div>
 
-    <div ="display:flex; width:100%; gap:4%; margin:0;">
-      <label for="password" style="width:48%;">Password:</label>
-      <label for="numKey" style="width:48%;">Numerical Key:</label>
+            <label for="plaintext">Text</label>
+            <textarea id="plaintext" placeholder="Type or paste your message here..."></textarea>
+
+            <div class="row">
+                <div class="field">
+                    <label for="keyword">Keyword (letters only)</label>
+                    <input id="keyword" type="text" placeholder="e.g. cipher" autocomplete="off">
+                </div>
+                <div class="field">
+                    <label for="pad-char">Padding character (optional)</label>
+                    <input id="pad-char" type="text" maxlength="1" placeholder="e.g. X">
+                </div>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn-primary" id="run-btn">
+                    <span id="run-label">Encrypt</span>
+                </button>
+                <button class="btn-ghost" id="clear-btn">Clear</button>
+            </div>
+
+            <div class="status-bar">
+                <span id="status-msg">Ready.</span>
+                <span id="length-info">Length: <strong>0</strong> characters</span>
+            </div>
+        </div>
+
+        <!-- Right: Output -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Output</div>
+                <div class="hint">Result of the selected operation</div>
+            </div>
+
+            <div class="output-box" id="output"></div>
+
+            <div class="btn-row">
+                <button class="btn-ghost" id="copy-btn">Copy</button>
+            </div>
+
+            <div class="table-wrapper" id="table-wrapper" style="display:none;">
+                <table id="matrix-table"></table>
+            </div>
+        </div>
     </div>
 
-    <div style="display:flex; width:100%; gap:4%; margin:0;">
-      <input type="text" id="password" style="width:48%;">
-      <input type="text" id="numKey" style="width:48%;">
+    <div class="footer">
+        <div>v25 – Columnar Transposition Cipher (English). Designed for classroom and web demonstration use.</div>
+        <div>Part of your classical cryptography tools collection.</div>
     </div>
-
-    <div style="display:flex; align-items:center; justify-content:space-between; width:100%; margin:6px 0;">
-      <div style="display:flex; align-items:center; gap:6px;">
-        <label for="rows">Rows:</label>
-        <input type="number" id="rows" min="1" value="1" style="width:60px; text-align:center;">
-      </div>
-
-      <div style="display:flex; align-items:center; gap:6px;">
-        <label for="cols">Columns:</label>
-        <input type="number" id="cols" min="1" value="1" style="width:60px; text-align:center;">
-      </div>
-    </div>
-
-    <div class="controls" style="display:flex; flex-wrap:wrap; gap:6px;">
-      <button class="wideBtn" onclick="fillRows()" style="flex:1 1 47%;">Fill table Row by Row</button>
-      <button class="wideBtn" onclick="enableColumnClickModeDecrypt()" style="flex:1 1 47%;">Fill table Column by Column</button>
-      <button class="wideBtn" onclick="refreshTable()" style="flex:1 1 47%;">Refresh Table</button>
-
-      <div style="display:flex; align-items:center; gap:6px; flex:1 1 47%;">
-        <button onclick="addFiller()" style="width:90px;">Add Fill</button>
-        <input type="text" id="fillerChar" value="X" maxlength="1" style="width:22px; text-align:center;">
-      </div>
-    </div>
-
-    <h3>Final Message</h3>
-    <textarea id="cipher" readonly style="height:28px; line-height:20px;"></textarea>
-
-    <div class="controls" style="display:flex; flex-wrap:wrap; gap:6px;">
-      <button class="wideBtn" onclick="enableColumnClickModeEncrypt()" style="flex:1 1 47%;">Write out A Column at a time</button>
-      <button class="wideBtn" onclick="writeAllRows()" style="flex:1 1 47%;">Write out Rows</button>
-      <button class="wideBtn" onclick="undoLast()" style="flex:1 1 47%;">Undo Last action</button>
-      <button class="wideBtn" onclick="clearFinalMessage()" style="flex:1 1 47%;">Clear Final Message</button>
-    </div>
-
-    <div id="fourButtons" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:10px;">
-      <button class="miniBtn" style="flex:1 1 47%;">H</button>
-      <button class="miniBtn" style="flex:1 1 47%;">A</button>
-      <button class="miniBtn" style="flex:1 1 47%;">B</button>
-      <button class="miniBtn" id="btnReturn" style="flex:1 1 47%;">Return to Main Room</button>
-      <div id="returnWhisper" style="width:100%;">I will bring you back</div>
-    </div>
-
-  </div>
-
-  <!-- SIGNATURE + LINKS ROW (fixed layout) -->
-  <div id="sigLinksRow" style="display:flex; align-items:flex-start; gap:20px; margin-top:10px;">
-
-    <div class="sigCell" style="flex:0 0 auto;">
-      <img src="signature.png" id="signatureImg" alt="Signature" style="height:80px; width:auto; display:block;">
-    </div>
-
-    <div class="linksCell" style="flex:1;">
-      <h3 class="linksTitle">Links to Videos</h3>
-
-      <textarea id="videoLinks" style="width:100%; height:60px;"></textarea>
-
-      <div id="linksList" style="margin-top:6px;"></div>
-
-      <div id="quickExample" style="margin-top:8px;">
-        <a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank">
-          A quick Column Transposition cipher example
-        </a>
-      </div>
-    </div>
-
-  </div>
-
 </div>
-
-
-      <h3>Rough Work Notes</h3>
-      <textarea id="notes" style="height:70px;"></textarea>
-
-    </div> <!-- end .left-panel -->
-
-    <div class="right-panel">
-      <h3 style="margin-top:0;">Key Row</h3>
-      <table id="keyRow">
-        <tbody></tbody>
-      </table>
-
-      <h3 style="margin-top:6px;">Matrix</h3>
-      <table id="matrix">
-        <tbody></tbody>
-      </table>
-    </div> <!-- end .right-panel -->
-
-  </div> <!-- end .container -->
-</div> <!-- end .top-bar -->
-
-<style>
-  .container {
-    display: flex;
-    gap: 20px;
-  }
-
-  .left-panel {
-    flex: 2;   /* twice as wide */
-  }
-
-  .right-panel {
-    flex: 1;   /* normal width */
-  }
-</style>
 
 <script>
-/* ============================================================
-   CORE LOGIC
-   ============================================================ */
-let lastHighlightedColumn = null;
-let mode = "encrypt";
-let cipherForDecrypt = "";
-let decryptIndex = 0;
-let filledColumns = new Set();
+(function () {
+    const modeButtons = document.querySelectorAll('.mode-btn');
+    const runBtn = document.getElementById('run-btn');
+    const runLabel = document.getElementById('run-label');
+    const clearBtn = document.getElementById('clear-btn');
+    const copyBtn = document.getElementById('copy-btn');
 
-function updateMessageLength() {
-  const msg = document.getElementById("message").value;
-  const noSpaces = msg.replace(/\s+/g, "").length;
-  document.getElementById("msgLength").innerText =
-    "Message length (not counting spaces): " + noSpaces;
-}
+    const textarea = document.getElementById('plaintext');
+    const keywordInput = document.getElementById('keyword');
+    const padInput = document.getElementById('pad-char');
+    const outputBox = document.getElementById('output');
+    const statusMsg = document.getElementById('status-msg');
+    const lengthInfo = document.getElementById('length-info');
+    const tableWrapper = document.getElementById('table-wrapper');
+    const matrixTable = document.getElementById('matrix-table');
 
-function getMatrixCells() {
-  return document.querySelector("#matrix tbody").rows;
-}
+    let currentMode = 'encrypt';
 
-function clearMatrixContent() {
-  const rows = getMatrixCells();
-  for (let r = 0; r < rows.length; r++) {
-    const cells = rows[r].cells;
-    for (let c = 0; c < cells.length; c++) {
-      cells[c].innerText = "";
+    function normalizeText(text) {
+        return text
+            .toUpperCase()
+            .replace(/[^A-Z]/g, '');
     }
-  }
-}
 
-function disableAllClicks() {
-  const cells = document.querySelectorAll("#matrix td");
-  cells.forEach(cell => {
-    cell.onclick = null;
-    cell.style.cursor = "default";
-  });
-}
-
-function setupKeyRowAutoAdvance() {
-  const keyCells = document.querySelectorAll("#keyRow td");
-
-  keyCells.forEach((cell, index) => {
-    cell.oninput = () => {
-      let text = cell.innerText.trim();
-      if (text.length > 1) {
-        text = text[0];
-        cell.innerText = text;
-      }
-      if (text.length === 1 && index < keyCells.length - 1) {
-        keyCells[index + 1].focus();
-      }
-    };
-
-    cell.onkeydown = (e) => {
-      if (e.key === "Backspace" && cell.innerText === "" && index > 0) {
-        keyCells[index - 1].focus();
-      }
-    };
-  });
-}
-
-/* ============================================================
-   TABLE BUILDING
-   ============================================================ */
-function refreshTable() {
-  const rows = parseInt(document.getElementById("rows").value, 10);
-  const cols = parseInt(document.getElementById("cols").value, 10);
-
-  document.getElementById("cipher").value = "";
-
-  lastHighlightedColumn = null;
-  mode = "encrypt";
-  cipherForDecrypt = "";
-  decryptIndex = 0;
-  filledColumns = new Set();
-
-  const keyBody = document.querySelector("#keyRow tbody");
-  const matrixBody = document.querySelector("#matrix tbody");
-  keyBody.innerHTML = "";
-  matrixBody.innerHTML = "";
-
-  const keyRow = document.createElement("tr");
-  for (let c = 0; c < cols; c++) {
-    const cell = document.createElement("td");
-    cell.contentEditable = "true";
-    cell.classList.add("key-label");
-    keyRow.appendChild(cell);
-  }
-  keyBody.appendChild(keyRow);
-
-  for (let r = 0; r < rows; r++) {
-    const row = document.createElement("tr");
-    for (let c = 0; c < cols; c++) {
-      const cell = document.createElement("td");
-      cell.contentEditable = "true";
-      row.appendChild(cell);
+    function normalizeKeyword(keyword) {
+        return keyword
+            .toUpperCase()
+            .replace(/[^A-Z]/g, '');
     }
-    matrixBody.appendChild(row);
-  }
 
-  setupKeyRowAutoAdvance();
-  setupMatrixAutoAdvance();
-  disableAllClicks();
-}
-
-function fillRows() {
-  let msg = document.getElementById("message").value.replace(/\s+/g, "");
-  const rows = getMatrixCells();
-  clearMatrixContent();
-
-  let index = 0;
-  for (let r = 0; r < rows.length; r++) {
-    const cells = rows[r].cells;
-    for (let c = 0; c < cells.length; c++) {
-      cells[c].innerText = msg[index] || "";
-      index++;
+    function buildColumnOrder(keyword) {
+        const letters = keyword.split('');
+        const indexed = letters.map((ch, idx) => ({ ch, idx }));
+        indexed.sort((a, b) => {
+            if (a.ch < b.ch) return -1;
+            if (a.ch > b.ch) return 1;
+            return a.idx - b.idx;
+        });
+        const order = new Array(letters.length);
+        indexed.forEach((item, rank) => {
+            order[item.idx] = rank;
+        });
+        return order;
     }
-  }
-}
 
-function addFiller() {
-  const filler = document.getElementById("fillerChar").value || "X";
-  const rows = getMatrixCells();
-
-  for (let r = 0; r < rows.length; r++) {
-    const cells = rows[r].cells;
-    for (let c = 0; c < cells.length; c++) {
-      if (cells[c].innerText.trim() === "") {
-        cells[c].innerText = filler;
-      }
-    }
-  }
-}
-
-function appendToCipher(text) {
-  const box = document.getElementById("cipher");
-  box.value += text;
-}
-
-function undoLast() {
-  const box = document.getElementById("cipher");
-  box.value = box.value.slice(0, -1);
-}
-
-function clearFinalMessage() {
-  document.getElementById("cipher").value = "";
-}
-
-function writeAllRows() {
-  const rows = getMatrixCells();
-  let result = "";
-
-  for (let r = 0; r < rows.length; r++) {
-    const cells = rows[r].cells;
-    for (let c = 0; c < cells.length; c++) {
-      const text = cells[c].innerText.trim();
-      if (text) result += text;
-    }
-  }
-
-  appendToCipher(result);
-}
-
-/* ============================================================
-   COLUMN OPERATIONS
-   ============================================================ */
-function highlightColumn(colIndex) {
-  const rows = getMatrixCells();
-
-  if (lastHighlightedColumn !== null) {
-    for (let r = 0; r < rows.length; r++) {
-      rows[r].cells[lastHighlightedColumn].style.backgroundColor = "";
-    }
-  }
-
-  for (let r = 0; r < rows.length; r++) {
-    rows[r].cells[colIndex].style.backgroundColor = "#ffff99";
-  }
-
-  lastHighlightedColumn = colIndex;
-}
-
-function readSingleColumn(colIndex) {
-  highlightColumn(colIndex);
-
-  const rows = getMatrixCells();
-  let result = "";
-
-  for (let r = 0; r < rows.length; r++) {
-    const text = rows[r].cells[colIndex].innerText.trim();
-    if (text) result += text;
-  }
-
-  appendToCipher(result);
-}
-
-function fillSingleColumnForDecrypt(colIndex) {
-  if (filledColumns.has(colIndex)) return;
-
-  highlightColumn(colIndex);
-
-  const rows = getMatrixCells();
-  const rowCount = rows.length;
-
-  for (let r = 0; r < rowCount; r++) {
-    if (decryptIndex < cipherForDecrypt.length) {
-      rows[r].cells[colIndex].innerText = cipherForDecrypt[decryptIndex++];
-    }
-  }
-
-  filledColumns.add(colIndex);
-}
-
-function handleColumnClick(colIndex) {
-  if (mode === "encrypt") {
-    readSingleColumn(colIndex);
-  } else if (mode === "decrypt") {
-    fillSingleColumnForDecrypt(colIndex);
-  }
-}
-
-function enableColumnClickModeEncrypt() {
-  mode = "encrypt";
-  const rows = getMatrixCells();
-  if (!rows.length) return;
-
-  disableAllClicks();
-
-  const rowCount = rows.length;
-  const colCount = rows[0].cells.length;
-
-  for (let c = 0; c < colCount; c++) {
-    for (let r = 0; r < rowCount; r++) {
-      const cell = rows[r].cells[c];
-      cell.style.cursor = "pointer";
-      cell.onclick = () => handleColumnClick(c);
-    }
-  }
-}
-
-function enableColumnClickModeDecrypt() {
-  mode = "decrypt";
-  cipherForDecrypt = document.getElementById("message").value.replace(/\s+/g, "");
-  decryptIndex = 0;
-  filledColumns = new Set();
-
-  const rows = getMatrixCells();
-  if (!rows.length) return;
-
-  disableAllClicks();
-
-  const rowCount = rows.length;
-  const colCount = rows[0].cells.length;
-
-  for (let c = 0; c < colCount; c++) {
-    for (let r = 0; r < rowCount; r++) {
-      const cell = rows[r].cells[c];
-      cell.style.cursor = "pointer";
-      cell.onclick = () => handleColumnClick(c);
-    }
-  }
-}
-
-/* ============================================================
-   AUTO ADVANCE LOGIC
-   ============================================================ */
-function setupMatrixAutoAdvance() {
-  const rows = getMatrixCells();
-  if (!rows.length) return;
-
-  const totalRows = rows.length;
-  const totalCols = rows[0].cells.length;
-
-  for (let r = 0; r < totalRows; r++) {
-    for (let c = 0; c < totalCols; c++) {
-      const cell = rows[r].cells[c];
-      cell.contentEditable = "true";
-
-      cell.oninput = () => {
-        let text = cell.innerText.trim();
-
-        if (text.length > 1) {
-          text = text[0];
-          cell.innerText = text;
+    function encryptColumnar(plain, keyword, padChar) {
+        const clean = normalizeText(plain);
+        const key = normalizeKeyword(keyword);
+        if (!clean.length || !key.length) {
+            return { error: 'Text and keyword are required.', result: '', matrix: [] };
         }
 
-        if (text.length === 1) {
-          let nextR = r;
-          let nextC = c + 1;
+        const cols = key.length;
+        const rows = Math.ceil(clean.length / cols);
+        const matrix = [];
+        let idx = 0;
 
-          if (nextC >= totalCols) {
-            nextC = 0;
-            nextR++;
-          }
-
-          if (nextR >= totalRows) {
-            nextR = 0;
-            nextC = 0;
-          }
-
-          rows[nextR].cells[nextC].focus();
+        for (let r = 0; r < rows; r++) {
+            const row = [];
+            for (let c = 0; c < cols; c++) {
+                if (idx < clean.length) {
+                    row.push(clean[idx++]);
+                } else {
+                    row.push(padChar || 'X');
+                }
+            }
+            matrix.push(row);
         }
-      };
 
-      cell.onkeydown = (e) => {
-        if (e.key === "Backspace" && cell.innerText === "") {
-          let prevR = r;
-          let prevC = c - 1;
+        const order = buildColumnOrder(key);
+        let cipher = '';
 
-          if (prevC < 0) {
-            prevC = totalCols - 1;
-            prevR--;
-          }
-
-          if (prevR < 0) {
-            prevR = totalRows - 1;
-            prevC = totalCols - 1;
-          }
-
-          rows[prevR].cells[prevC].focus();
+        for (let rank = 0; rank < cols; rank++) {
+            const colIndex = order.indexOf(rank);
+            for (let r = 0; r < rows; r++) {
+                cipher += matrix[r][colIndex];
+            }
         }
-      };
+
+        return { error: null, result: cipher, matrix, order, keyword: key };
     }
-  }
-}
 
-window.onload = function() {
-  document.getElementById("rows").value = 1;
-  document.getElementById("cols").value = 1;
-  refreshTable();
-};
+    function decryptColumnar(cipher, keyword) {
+        const clean = normalizeText(cipher);
+        const key = normalizeKeyword(keyword);
+        if (!clean.length || !key.length) {
+            return { error: 'Text and keyword are required.', result: '', matrix: [] };
+        }
 
+        const cols = key.length;
+        const rows = Math.ceil(clean.length / cols);
+        const totalCells = rows * cols;
 
-  document.getElementById("btnReturn").addEventListener("click", function () {
-    window.location.href = "../index.html";
-});
+        const paddedCipher = clean.padEnd(totalCells, 'X');
+
+        const order = buildColumnOrder(key);
+        const matrix = Array.from({ length: rows }, () => new Array(cols).fill(''));
+
+        let idx = 0;
+        for (let rank = 0; rank < cols; rank++) {
+            const colIndex = order.indexOf(rank);
+            for (let r = 0; r < rows; r++) {
+                matrix[r][colIndex] = paddedCipher[idx++];
+            }
+        }
+
+        let plain = '';
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                plain += matrix[r][c];
+            }
+        }
+
+        return { error: null, result: plain, matrix, order, keyword: key };
+    }
+
+    function renderMatrix(matrix, keyword, order) {
+        if (!matrix || !matrix.length) {
+            tableWrapper.style.display = 'none';
+            matrixTable.innerHTML = '';
+            return;
+        }
+
+        tableWrapper.style.display = 'block';
+        const cols = matrix[0].length;
+        let html = '<thead><tr>';
+
+        if (keyword && order) {
+            html += '<th>#</th>';
+            for (let i = 0; i < cols; i++) {
+                html += '<th>' + keyword[i] + '<br><span style="font-size:0.7em;opacity:0.8;">' + (order[i] + 1) + '</span></th>';
+            }
+            html += '</tr></thead><tbody>';
+        } else {
+            html += '<th colspan="' + cols + '">Matrix</th></tr></thead><tbody>';
+        }
+
+        matrix.forEach((row, r) => {
+            html += '<tr>';
+            if (keyword && order) {
+                html += '<td style="opacity:0.7;">' + (r + 1) + '</td>';
+            }
+            row.forEach(cell => {
+                html += '<td>' + cell + '</td>';
+            });
+            html += '</tr>';
+        });
+
+        html += '</tbody>';
+        matrixTable.innerHTML = html;
+    }
+
+    function updateLengthInfo() {
+        const raw = textarea.value;
+        const clean = normalizeText(raw);
+        lengthInfo.innerHTML = 'Length: <strong>' + clean.length + '</strong> letters (A–Z)';
+    }
+
+    function setStatus(message, isError) {
+        statusMsg.textContent = message;
+        statusMsg.className = isError ? 'error' : '';
+    }
+
+    modeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            modeButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentMode = btn.dataset.mode;
+            runLabel.textContent = currentMode === 'encrypt' ? 'Encrypt' : 'Decrypt';
+            setStatus('Mode: ' + (currentMode === 'encrypt' ? 'Encrypt' : 'Decrypt') + '.', false);
+            outputBox.textContent = '';
+            renderMatrix([], null, null);
+        });
+    });
+
+    runBtn.addEventListener('click', () => {
+        const text = textarea.value;
+        const keyword = keywordInput.value;
+        const padChar = padInput.value.trim() || 'X';
+
+        if (!text.trim() || !keyword.trim()) {
+            setStatus('Please enter both text and keyword.', true);
+            return;
+        }
+
+        let result;
+        if (currentMode === 'encrypt') {
+            result = encryptColumnar(text, keyword, padChar);
+        } else {
+            result = decryptColumnar(text, keyword);
+        }
+
+        if (result.error) {
+            setStatus(result.error, true);
+            outputBox.textContent = '';
+            renderMatrix([], null, null);
+            return;
+        }
+
+        outputBox.textContent = result.result;
+        setStatus('Done.', false);
+        renderMatrix(result.matrix, result.keyword, result.order);
+    });
+
+    clearBtn.addEventListener('click', () => {
+        textarea.value = '';
+        keywordInput.value = '';
+        padInput.value = '';
+        outputBox.textContent = '';
+        renderMatrix([], null, null);
+        setStatus('Cleared.', false);
+        updateLengthInfo();
+    });
+
+    copyBtn.addEventListener('click', () => {
+        const text = outputBox.textContent.trim();
+        if (!text) {
+            setStatus('Nothing to copy.', true);
+            return;
+        }
+        navigator.clipboard.writeText(text).then(() => {
+            setStatus('Output copied to clipboard.', false);
+        }).catch(() => {
+            setStatus('Could not access clipboard.', true);
+        });
+    });
+
+    textarea.addEventListener('input', updateLengthInfo);
+
+    updateLengthInfo();
+    setStatus('Ready.', false);
+})();
 </script>
-
-<!-- External functions: help, messages, signature, check -->
-<script src="../js/CSS/main.js"></script>
-
 </body>
 </html>
