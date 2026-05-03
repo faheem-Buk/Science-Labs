@@ -68,6 +68,36 @@
     }
 
     .key-label { color: red; font-weight: bold; }
+
+  .linksCell {
+    width: 60%;
+}
+
+.linksTitle {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#videoLinks {
+    width: 100%;
+    height: 90px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 6px;
+    resize: vertical;
+}
+
+  #returnWhisper {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+    margin-left: 4px;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+  
   </style>
 </head>
 
@@ -134,11 +164,45 @@
         <button class="wideBtn" onclick="undoLast()">Undo Last action</button>
         <button class="wideBtn" onclick="clearFinalMessage()">Clear Final Message</button>
       </div>
+<div id="fourButtons">
+    <button class="miniBtn">H</button>
+    <button class="miniBtn">A</button>
+    <button class="miniBtn">B</button>
+    <button class="miniBtn" id="btnReturn">Return to Main Room</button>
+</div>
 
-      <h3>Rough Work Notes</h3>
+<div id="returnWhisper">I will bring you back</div>
+ 
+     <div id="sigLinksRow">
+
+    <div class="sigCell">
+        <img src="signature.png" id="signatureImg" alt="Signature">
+    </div>
+
+
+
+<div class="linksCell">
+    <h3 class="linksTitle">Links to Videos</h3>
+    <textarea id="videoLinks"></textarea>
+
+    <!-- ADD THIS LINE BELOW -->
+    <div id="linksList"></div>
+
+<div id="quickExample">
+    <a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank">
+        A quick Column Transposition cipher example
+    </a>
+</div>
+
+  
+</div>
+
+           
+           
+           <h3>Rough Work Notes</h3>
       <textarea id="notes" style="height:70px;"></textarea>
 
-    </div>
+
 
     <div class="right-panel">
       <h3 style="margin-top:0;">Key Row</h3>
@@ -482,6 +546,11 @@ window.onload = function() {
   document.getElementById("cols").value = 1;
   refreshTable();
 };
+
+
+  document.getElementById("btnReturn").addEventListener("click", function () {
+    window.location.href = "../index.html";
+});
 </script>
 
 <!-- External functions: help, messages, signature, check -->
