@@ -1,194 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Column Transposition Cipher</title>
+<!-- saved from url=(0042)https://faheem-buk.github.io/Science-Labs/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Faheem 2025 Science Lab</title>
+    <link rel="stylesheet" href="./Faheem 2025 Science Lab999999999999999_files/main.css">
 
-<style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-}
+    <style>
+        /* --- Layout improvements for the 6 images --- */
 
-.container {
-    width: 400px;
-}
+        .tool-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            justify-items: center;
+            margin-top: 30px;
+        }
 
-textarea, input {
-    width: 100%;
-    margin-bottom: 10px;
-}
+        .tool-buttons img {
+            width: 250px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
 
-.buttons button {
-    margin-right: 10px;
-}
+        .tool-buttons img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 12px rgba(0,0,0,0.25);
+        }
 
-#helpWindow, #msgWindow {
-    width: 250px;
-    background: #f9f9f9;
-    border: 2px solid #aaa;
-    border-radius: 8px;
-    padding: 0;
-    position: absolute;
-    top: 150px;
-    left: 450px;
-    display: none;
-}
+        /* Text under each image */
+        .tool-label {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #222;
+            cursor: pointer;
+        }
 
-.header {
-    background: #ddd;
-    padding: 8px;
-    cursor: move;
-    font-weight: bold;
-}
-
-.content {
-    padding: 10px;
-}
-</style>
+        .tool-link {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
 
 </head>
 
 <body>
 
-<h2>Column Transposition Cipher</h2>
-
-<div class="container">
-    <label>Enter Message:</label>
-    <textarea id="message" rows="4"></textarea>
-
-    <label>Enter Key:</label>
-    <input type="text" id="key">
-
-    <div class="buttons">
-        <button onclick="encrypt()">Encrypt</button>
-        <button onclick="decrypt()">Decrypt</button>
+    <!-- Founder’s Stamp -->
+    <div class="founder-stamp">
+        <img src="./Faheem 2025 Science Lab999999999999999_files/main_faheem_with_2025.png" alt="Founder Stamp">
+        <div class="stamp-text">
+            <strong>Faheem</strong><br>
+            Year of Independence — 2025<br>
+            <em>Welcome. May your learning here enlighten your mind.</em>
+        </div>
     </div>
 
-    <label>Output:</label>
-    <textarea id="output" rows="4" readonly></textarea>
-</div>
+    <!-- Main Content -->
+    <div class="main-container">
+        <h1>Welcome to the Main Room</h1>
+        <p>Select a tool to begin your journey.</p>
 
-<button id="helpBtn" onclick="toggleHelp()">Help</button>
+        <div class="tool-buttons">
 
-<div id="helpWindow" class="draggable">
-    <div class="header" onmousedown="dragStart(event, 'helpWindow')">Help</div>
-    <div class="content">
-        <p>This tool performs Columnar Transposition Encryption and Decryption.</p>
-        <p>Enter a message and a key. The key determines the column order.</p>
+            <!--
+            <a href="https://faheem-buk.github.io/Science-Labs/tools/caesar_english.html" class="tool-btn">Caesar Cipher (English)</a>
+            <a href="https://faheem-buk.github.io/Science-Labs/tools/caesar_arabic.html" class="tool-btn">Caesar Cipher (Arabic)</a>
+            <a href="https://faheem-buk.github.io/Science-Labs/tools/column_trans_eng_v25.html" class="tool-btn">Column Transposition (English)</a>
+            -->
+
+            <!-- 1. Caesar English -->
+            <a class="tool-link" href="https://faheem-buk.github.io/Science-Labs/tools/caesar_english.html">
+                <img src="./Faheem 2025 Science Lab999999999999999_files/caesar_english.png" alt="Caesar English Tool">
+                <div class="tool-label">Caesar Cipher (English)</div>
+            </a>
+
+            <!-- 2. Caesar Arabic -->
+            <a class="tool-link" href="https://faheem-buk.github.io/Science-Labs/tools/caesar_arabic.html">
+                <img src="./Faheem 2025 Science Lab999999999999999_files/caesar_arabic.png" alt="Caesar Arabic Tool">
+                <div class="tool-label">Caesar Cipher (Arabic)</div>
+            </a>
+
+            <!-- 3. Column Transposition -->
+            <a class="tool-link" href="https://faheem-buk.github.io/Science-Labs/tools/column_trans_eng_v25.html">
+                <img src="./Faheem 2025 Science Lab999999999999999_files/column_trans_cipher.png" alt="Column Transposition Tool">
+                <div class="tool-label">Column Transposition (English)</div>
+            </a>
+
+            <!-- 4. Vigenere English -->
+            <a class="tool-link" href="https://faheem-buk.github.io/Science-Labs/tools/vigenere_cipher_english_v17.html">
+                <img src="./Faheem 2025 Science Lab999999999999999_files/vigenere.png" alt="Vigenere Cipher English Tool">
+                <div class="tool-label">Vigenère Cipher (English)</div>
+            </a>
+
+            <!-- 5. Playfair English -->
+            <a class="tool-link" href="https://faheem-buk.github.io/Science-Labs/tools/playfair_cipher_english_v10.html">
+                <img src="./Faheem 2025 Science Lab999999999999999_files/playfair_english.png" alt="Playfair Cipher English Tool">
+                <div class="tool-label">Playfair Cipher (English)</div>
+            </a>
+
+            <!-- 6. Playfair Arabic -->
+            <a class="tool-link" href="https://faheem-buk.github.io/Science-Labs/tools/playfair_cipher_arabic_v14.html">
+                <img src="./Faheem 2025 Science Lab999999999999999_files/playfair_arabic.png" alt="Playfair Cipher Arabic Tool">
+                <div class="tool-label">Playfair Cipher (Arabic)</div>
+            </a>
+
+        </div>
     </div>
-</div>
 
-<div id="msgWindow" class="draggable">
-    <div class="header" onmousedown="dragStart(event, 'msgWindow')">Message</div>
-    <div class="content" id="msgContent"></div>
-</div>
+    <footer>
+        <img src="./Faheem 2025 Science Lab999999999999999_files/badge_official_academic.png" alt="Dr. Faheem Buhatwa Signature" style="width:300px;">
+    </footer>
 
-<script>
-function encrypt() {
-    let msg = document.getElementById("message").value.replace(/ /g, "");
-    let key = document.getElementById("key").value;
 
-    if (!msg || !key) return showMsg("Please enter both message and key.");
-
-    let keyOrder = getKeyOrder(key);
-    let cols = key.length;
-    let rows = Math.ceil(msg.length / cols);
-
-    let matrix = [];
-    let index = 0;
-
-    for (let r = 0; r < rows; r++) {
-        matrix[r] = [];
-        for (let c = 0; c < cols; c++) {
-            matrix[r][c] = msg[index] || "X";
-            index++;
-        }
-    }
-
-    let result = "";
-    for (let k = 0; k < cols; k++) {
-        let colIndex = keyOrder.indexOf(k);
-        for (let r = 0; r < rows; r++) {
-            result += matrix[r][colIndex];
-        }
-    }
-
-    document.getElementById("output").value = result;
-}
-
-function decrypt() {
-    let cipher = document.getElementById("message").value.replace(/ /g, "");
-    let key = document.getElementById("key").value;
-
-    if (!cipher || !key) return showMsg("Please enter both cipher text and key.");
-
-    let keyOrder = getKeyOrder(key);
-    let cols = key.length;
-    let rows = Math.ceil(cipher.length / cols);
-
-    let matrix = Array.from({ length: rows }, () => Array(cols).fill(""));
-
-    let index = 0;
-    for (let k = 0; k < cols; k++) {
-        let colIndex = keyOrder.indexOf(k);
-        for (let r = 0; r < rows; r++) {
-            matrix[r][colIndex] = cipher[index];
-            index++;
-        }
-    }
-
-    let result = "";
-    for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-            result += matrix[r][c];
-        }
-    }
-
-    document.getElementById("output").value = result;
-}
-
-function getKeyOrder(key) {
-    return key.split("")
-             .map((char, index) => ({ char, index }))
-             .sort((a, b) => a.char.localeCompare(b.char))
-             .map(obj => obj.index);
-}
-
-function toggleHelp() {
-    let win = document.getElementById("helpWindow");
-    win.style.display = win.style.display === "block" ? "none" : "block";
-}
-
-function showMsg(text) {
-    let win = document.getElementById("msgWindow");
-    document.getElementById("msgContent").innerText = text;
-    win.style.display = "block";
-}
-
-let activeWindow = null;
-let offsetX = 0, offsetY = 0;
-
-function dragStart(e, id) {
-    activeWindow = document.getElementById(id);
-    offsetX = e.clientX - activeWindow.offsetLeft;
-    offsetY = e.clientY - activeWindow.offsetTop;
-    document.onmousemove = dragMove;
-    document.onmouseup = dragStop;
-}
-
-function dragMove(e) {
-    if (!activeWindow) return;
-    activeWindow.style.left = (e.clientX - offsetX) + "px";
-    activeWindow.style.top = (e.clientY - offsetY) + "px";
-}
-
-function dragStop() {
-    activeWindow = null;
-    document.onmousemove = null;
-    document.onmouseup = null;
-}
-</script>
-
-</body>
-</html>
+</body></html>
