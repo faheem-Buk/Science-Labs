@@ -97,6 +97,7 @@
     opacity: 0;
     transition: opacity 0.3s ease;
 }
+
 #btnReturn:hover + #returnWhisper {
     opacity: 1;
 }
@@ -150,6 +151,7 @@
         </div>
       </div>
 
+
       <div class="controls">
         <button class="wideBtn" onclick="fillRows()">Fill table Row by Row</button>
         <button class="wideBtn" onclick="enableColumnClickModeDecrypt()">Fill table Column by Column</button>
@@ -168,14 +170,17 @@
         <button class="wideBtn" onclick="undoLast()">Undo Last action</button>
         <button class="wideBtn" onclick="clearFinalMessage()">Clear Final Message</button>
       </div>
-<div id="fourButtons">
+
+      
+ <div id="fourButtons">
     <button class="miniBtn">H</button>
     <button class="miniBtn">A</button>
     <button class="miniBtn">B</button>
     <button class="miniBtn" id="btnReturn">Return to Main Room</button>
+    <div id="returnWhisper">I will bring you back</div>
 </div>
 
-<div id="returnWhisper">I will bring you back</div>
+
  
      <div id="sigLinksRow">
 
