@@ -101,6 +101,33 @@
 #btnReturn:hover + #returnWhisper {
     opacity: 1;
 }
+/* EMERGENCY FIX — FORCE TWO COLUMNS ONLY */
+#mainContainer, .container, body {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100% !important;
+  gap: 20px !important;
+}
+
+/* LEFT PANEL — FIXED WIDTH, WIDE */
+.left-panel {
+  width: 700px !important;
+  min-width: 700px !important;
+  max-width: 700px !important;
+}
+
+/* RIGHT PANEL — FIXED WIDTH */
+.right-panel {
+  width: 350px !important;
+  min-width: 350px !important;
+  max-width: 350px !important;
+}
+
+/* STOP ANY THIRD COLUMN FROM FORMING */
+.left-panel, .right-panel {
+  display: block !important;
+  float: none !important;
+}
 
   
   </style>
