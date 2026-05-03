@@ -134,70 +134,71 @@
 </head>
 
 <body>
-
 <div class="top-bar">
   <div class="container">
 
   <div class="left-panel">
 
-  <div style="display:flex; justify-content:space-between; align-items:center;">
-    <label for="message">Plaintext or Ciphered Text</label>
-    <span id="msgLength">Message length (not counting spaces): 0</span>
-  </div>
+    <h1>Transposition Cipher Tool</h1>
 
-  <input type="text" id="message" oninput="updateMessageLength()">
-
-  <div ="display:flex; width:100%; gap:4%; margin:0;">
-    <label for="password" style="width:48%;">Password:</label>
-    <label for="numKey" style="width:48%;">Numerical Key:</label>
-  </div>
-
-  <div style="display:flex; width:100%; gap:4%; margin:0;">
-    <input type="text" id="password" style="width:48%;">
-    <input type="text" id="numKey" style="width:48%;">
-  </div>
-
-  <div style="display:flex; align-items:center; justify-content:space-between; width:100%; margin:6px 0;">
-    <div style="display:flex; align-items:center; gap:6px;">
-      <label for="rows">Rows:</label>
-      <input type="number" id="rows" min="1" value="1" style="width:60px; text-align:center;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <label for="message">Plaintext or Ciphered Text</label>
+      <span id="msgLength">Message length (not counting spaces): 0</span>
     </div>
 
-    <div style="display:flex; align-items:center; gap:6px;">
-      <label for="cols">Columns:</label>
-      <input type="number" id="cols" min="1" value="1" style="width:60px; text-align:center;">
+    <input type="text" id="message" oninput="updateMessageLength()">
+
+    <div ="display:flex; width:100%; gap:4%; margin:0;">
+      <label for="password" style="width:48%;">Password:</label>
+      <label for="numKey" style="width:48%;">Numerical Key:</label>
     </div>
-  </div>
 
-  <!-- INPUT BUTTONS (2 per row) -->
-  <div class="controls" style="display:flex; flex-wrap:wrap; gap:6px;">
-    <button class="wideBtn" onclick="fillRows()" style="flex:1 1 47%;">Fill table Row by Row</button>
-    <button class="wideBtn" onclick="enableColumnClickModeDecrypt()" style="flex:1 1 47%;">Fill table Column by Column</button>
-    <button class="wideBtn" onclick="refreshTable()" style="flex:1 1 47%;">Refresh Table</button>
-
-    <div style="display:flex; align-items:center; gap:6px; flex:1 1 47%;">
-      <button onclick="addFiller()" style="width:90px;">Add Fill</button>
-      <input type="text" id="fillerChar" value="X" maxlength="1" style="width:22px; text-align:center;">
+    <div style="display:flex; width:100%; gap:4%; margin:0;">
+      <input type="text" id="password" style="width:48%;">
+      <input type="text" id="numKey" style="width:48%;">
     </div>
-  </div>
 
-  <h3>Final Message</h3>
-  <textarea id="cipher" readonly style="height:28px; line-height:20px;"></textarea>
+    <div style="display:flex; align-items:center; justify-content:space-between; width:100%; margin:6px 0;">
+      <div style="display:flex; align-items:center; gap:6px;">
+        <label for="rows">Rows:</label>
+        <input type="number" id="rows" min="1" value="1" style="width:60px; text-align:center;">
+      </div>
 
-  <!-- OUTPUT BUTTONS (2 per row) -->
-  <div class="controls" style="display:flex; flex-wrap:wrap; gap:6px;">
-    <button class="wideBtn" onclick="enableColumnClickModeEncrypt()" style="flex:1 1 47%;">Write out A Column at a time</button>
-    <button class="wideBtn" onclick="writeAllRows()" style="flex:1 1 47%;">Write out Rows</button>
-    <button class="wideBtn" onclick="undoLast()" style="flex:1 1 47%;">Undo Last action</button>
-    <button class="wideBtn" onclick="clearFinalMessage()" style="flex:1 1 47%;">Clear Final Message</button>
-  </div>
+      <div style="display:flex; align-items:center; gap:6px;">
+        <label for="cols">Columns:</label>
+        <input type="number" id="cols" min="1" value="1" style="width:60px; text-align:center;">
+      </div>
+    </div>
 
-  <div id="fourButtons" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:10px;">
-    <button class="miniBtn" style="flex:1 1 47%;">H</button>
-    <button class="miniBtn" style="flex:1 1 47%;">A</button>
-    <button class="miniBtn" style="flex:1 1 47%;">B</button>
-    <button class="miniBtn" id="btnReturn" style="flex:1 1 47%;">Return to Main Room</button>
-    <div id="returnWhisper" style="width:100%;">I will bring you back</div>
+    <div class="controls" style="display:flex; flex-wrap:wrap; gap:6px;">
+      <button class="wideBtn" onclick="fillRows()" style="flex:1 1 47%;">Fill table Row by Row</button>
+      <button class="wideBtn" onclick="enableColumnClickModeDecrypt()" style="flex:1 1 47%;">Fill table Column by Column</button>
+      <button class="wideBtn" onclick="refreshTable()" style="flex:1 1 47%;">Refresh Table</button>
+
+      <div style="display:flex; align-items:center; gap:6px; flex:1 1 47%;">
+        <button onclick="addFiller()" style="width:90px;">Add Fill</button>
+        <input type="text" id="fillerChar" value="X" maxlength="1" style="width:22px; text-align:center;">
+      </div>
+    </div>
+
+    <h3>Final Message</h3>
+    <textarea id="cipher" readonly style="height:28px; line-height:20px;"></textarea>
+
+    <div class="controls" style="display:flex; flex-wrap:wrap; gap:6px;">
+      <button class="wideBtn" onclick="enableColumnClickModeEncrypt()" style="flex:1 1 47%;">Write out A Column at a time</button>
+      <button class="wideBtn" onclick="writeAllRows()" style="flex:1 1 47%;">Write out Rows</button>
+      <button class="wideBtn" onclick="undoLast()" style="flex:1 1 47%;">Undo Last action</button>
+      <button class="wideBtn" onclick="clearFinalMessage()" style="flex:1 1 47%;">Clear Final Message</button>
+    </div>
+
+    <div id="fourButtons" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:10px;">
+      <button class="miniBtn" style="flex:1 1 47%;">H</button>
+      <button class="miniBtn" style="flex:1 1 47%;">A</button>
+      <button class="miniBtn" style="flex:1 1 47%;">B</button>
+      <button class="miniBtn" id="btnReturn" style="flex:1 1 47%;">Return to Main Room</button>
+      <div id="returnWhisper" style="width:100%;">I will bring you back</div>
+    </div>
+
   </div>
 
   <!-- SIGNATURE + LINKS ROW (fixed layout) -->
