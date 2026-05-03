@@ -88,13 +88,17 @@
     resize: vertical;
 }
 
-  #returnWhisper {
+#returnWhisper {
     font-size: 12px;
     color: #666;
     margin-top: 4px;
     margin-left: 4px;
     font-style: italic;
-    opacity: 0.8;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+#btnReturn:hover + #returnWhisper {
+    opacity: 1;
 }
 
   
