@@ -1,126 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Faheem 2025 Science Lab</title>
+<meta charset="UTF-8">
+<title>Scientific Tools</title>
 
-  <!-- CSS path fixed -->
-  <link rel="stylesheet" href="js/CSS/main.css">
-
-  <style>
-    .tool-buttons {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 25px;
-      justify-items: center;
-      margin-top: 30px;
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
     }
 
-    .tool-buttons img {
-      width: 250px;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    /* MAIN TWO-COLUMN LAYOUT */
+    .container {
+        display: grid;
+        grid-template-columns: 66% 34%;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
     }
 
-    .tool-buttons img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 12px rgba(0,0,0,0.25);
+    /* LEFT SIDE */
+    .left {
+        padding: 30px;
+        overflow-y: auto;
+        background: white;
     }
 
-    .tool-label {
-      text-align: center;
-      margin-top: 8px;
-      font-size: 18px;
-      font-weight: bold;
-      color: #222;
-      cursor: pointer;
+    .title {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 25px;
+        text-align: center;
     }
 
-    .tool-link {
-      text-decoration: none;
-      color: inherit;
+    /* TOOL GRID: 3 per row */
+    .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        padding: 10px;
     }
-  </style>
+
+    .tool-box {
+        background: #e8e8e8;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .tool-box:hover {
+        background: #d0d0d0;
+    }
+
+    /* RIGHT SIDE IMAGE */
+    .right {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .right img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+
 </head>
-
 <body>
-<h1 style="margin:0; padding:0; font-size:36px; font-weight:700; text-align:left;">
-    Faheem’s Science Labs
-</h1>
 
-<h2 style="margin:0; padding:0; font-size:22px; font-weight:400; text-align:left;">
-    Tools for Scientists and Engineers
-</h2>
+<div class="container">
 
-  <!-- Founder’s Stamp -->
-  <div class="founder-stamp">
-    <!-- image path fixed -->
-    <img src="assets/images/main_faheem_with_2025.png" alt="Founder Stamp">
-    <div class="stamp-text">
-      <strong>Faheem</strong><br>
-      Year of Independence — 2025<br>
-      <em>Welcome. May your learning here enlighten your mind.</em>
+    <!-- LEFT SIDE -->
+    <div class="left">
+        <div class="title">Scientific Tools</div>
+
+        <div class="tools-grid">
+            <div class="tool-box">Tool 1</div>
+            <div class="tool-box">Tool 2</div>
+            <div class="tool-box">Tool 3</div>
+            <div class="tool-box">Tool 4</div>
+            <div class="tool-box">Tool 5</div>
+            <div class="tool-box">Tool 6</div>
+        </div>
     </div>
-  </div>
 
-  <!-- Main Content -->
-  <div class="main-container">
-    <h1>Welcome to the Main Room</h1>
-    <p>Select a tool to begin your journey.</p>
-
-    <div class="tool-buttons">
-
-      <!-- Old text buttons kept as comment -->
-      <!--
-      <a href="tools/caesar_english.html" class="tool-btn">Caesar Cipher (English)</a>
-      <a href="tools/caesar_arabic.html" class="tool-btn">Caesar Cipher (Arabic)</a>
-      <a href="tools/column_trans_eng_v25.html" class="tool-btn">Column Transposition (English)</a>
-      -->
-
-      <!-- 1. Caesar English -->
-      <a class="tool-link" href="tools/caesar_english.html">
-        <img src="assets/images/caesar_english.png" alt="Caesar English Tool">
-        <div class="tool-label">Caesar Cipher (English)</div>
-      </a>
-
-      <!-- 2. Caesar Arabic -->
-      <a class="tool-link" href="tools/caesar_arabic.html">
-        <img src="assets/images/caesar_arabic.png" alt="Caesar Arabic Tool">
-        <div class="tool-label">Caesar Cipher (Arabic)</div>
-      </a>
-
-      <!-- 3. Column Transposition -->
-      <a class="tool-link" href="tools/column_trans_eng_v25.html">
-        <img src="assets/images/column_trans_cipher.png" alt="Column Transposition Tool">
-        <div class="tool-label">Column Transposition (English)</div>
-      </a>
-
-      <!-- 4. Vigenere English -->
-      <a class="tool-link" href="tools/vigenere_cipher_english_v17.html">
-        <img src="assets/images/vigenere.png" alt="Vigenere Cipher English Tool">
-        <div class="tool-label">Vigenère Cipher (English)</div>
-      </a>
-
-      <!-- 5. Playfair English -->
-      <a class="tool-link" href="tools/playfair_cipher_english_v10.html">
-        <img src="assets/images/playfair_english.png" alt="Playfair Cipher English Tool">
-        <div class="tool-label">Playfair Cipher (English)</div>
-      </a>
-
-      <!-- 6. Playfair Arabic -->
-      <a class="tool-link" href="tools/playfair_cipher_arabic_v14.html">
-        <img src="assets/images/playfair_arabic.png" alt="Playfair Cipher Arabic Tool">
-        <div class="tool-label">Playfair Cipher (Arabic)</div>
-      </a>
-
+    <!-- RIGHT SIDE IMAGE -->
+    <div class="right">
+        <img src="your-2025-photo.jpg" alt="Faheem 2025">
     </div>
-  </div>
 
-  <footer>
-    <!-- badge path fixed -->
-    <img src="assets/images/badge_official_academic.png"
-         alt="Dr. Faheem Buhatwa Signature"
-         style="width:300px;">
-  </footer>
+</div>
 
 </body>
 </html>
