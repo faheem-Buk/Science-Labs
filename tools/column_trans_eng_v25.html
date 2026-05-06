@@ -5,44 +5,18 @@
   <title>Columnar Transposition Workpad</title>
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      overflow: hidden;
-    }
+    body { font-family: Arial, sans-serif; margin: 20px; }
 
-    /* MAIN 66/34 LAYOUT */
+    /* INTERNAL TOOL LAYOUT (unchanged) */
     .container {
       display: flex;
-      width: 100%;
-      height: 100vh;
       gap: 20px;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    .left-column {
-      flex: 2; /* 66% */
-      overflow-y: auto;
-      padding-right: 10px;
-    }
-
-    .right-column {
-      flex: 1; /* 34% */
-      display: flex;
-      justify-content: center;
       align-items: flex-start;
     }
 
-    .side-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .left-panel { width: 45%; }
+    .right-panel { width: 55%; }
 
-    /* ORIGINAL TOOL STYLES */
     label { display: inline-block; margin-bottom: 2px; }
     input[type="text"] { width: 100%; box-sizing: border-box; }
     textarea { width: 100%; box-sizing: border-box; margin-top: 0; }
@@ -75,85 +49,104 @@
 
 <body>
 
-<div class="container">
+<!-- ============================================================
+     OUTER PAGE LAYOUT — 66% LEFT (TOOL), 34% RIGHT (IMAGE)
+     ============================================================ -->
+<table width="100%" cellspacing="0" cellpadding="0">
+  <tr>
 
-  <!-- LEFT SIDE (66%) -->
-  <div class="left-column">
+    <!-- LEFT COLUMN — FULL TOOL -->
+    <td style="width:66%; vertical-align:top; padding-right:20px;">
 
-    <h2 style="margin-top:0;">Columnar Transposition Workpad</h2>
+      <h2 style="margin-top:0;">Columnar Transposition Workpad</h2>
 
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-      <label for="message">Plaintext or Ciphered Text</label>
-      <span id="msgLength">Message length (not counting spaces): 0</span>
-    </div>
+      <div class="container">
 
-    <input type="text" id="message" oninput="updateMessageLength()">
+        <div class="left-panel">
 
-    <div style="display:flex; width:100%; gap:4%; margin:0;">
-      <label for="password" style="width:48%;">Password:</label>
-      <label for="numKey" style="width:48%;">Numerical Key:</label>
-    </div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <label for="message">Plaintext or Ciphered Text</label>
+            <span id="msgLength">Message length (not counting spaces): 0</span>
+          </div>
 
-    <div style="display:flex; width:100%; gap:4%; margin:0;">
-      <input type="text" id="password" style="width:48%;">
-      <input type="text" id="numKey" style="width:48%;">
-    </div>
+          <input type="text" id="message" oninput="updateMessageLength()">
 
-    <div style="display:flex; align-items:center; justify-content:space-between; width:100%; margin:6px 0;">
-      <div style="display:flex; align-items:center; gap:6px;">
-        <label for="rows">Rows:</label>
-        <input type="number" id="rows" min="1" value="1" style="width:60px; text-align:center;">
+          <div style="display:flex; width:100%; gap:4%; margin:0;">
+            <label for="password" style="width:48%;">Password:</label>
+            <label for="numKey" style="width:48%;">Numerical Key:</label>
+          </div>
+
+          <div style="display:flex; width:100%; gap:4%; margin:0;">
+            <input type="text" id="password" style="width:48%;">
+            <input type="text" id="numKey" style="width:48%;">
+          </div>
+
+          <div style="display:flex; align-items:center; justify-content:space-between; width:100%; margin:6px 0;">
+            <div style="display:flex; align-items:center; gap:6px;">
+              <label for="rows">Rows:</label>
+              <input type="number" id="rows" min="1" value="1" style="width:60px; text-align:center;">
+            </div>
+
+            <div style="display:flex; align-items:center; gap:6px;">
+              <label for="cols">Columns:</label>
+              <input type="number" id="cols" min="1" value="1" style="width:60px; text-align:center;">
+            </div>
+          </div>
+
+          <div class="controls">
+            <button class="wideBtn" onclick="fillRows()">Fill table Row by Row</button>
+            <button class="wideBtn" onclick="enableColumnClickModeDecrypt()">Fill table Column by Column</button>
+            <button class="wideBtn" onclick="refreshTable()">Refresh Table</button>
+
+            <button onclick="addFiller()" style="width:120px;">Add Fill</button>
+            <input type="text" id="fillerChar" value="X" maxlength="1" style="width:22px; text-align:center;">
+          </div>
+
+          <h3>Final Message</h3>
+          <textarea id="cipher" readonly style="height:28px; line-height:20px;"></textarea>
+
+          <div class="controls">
+            <button class="wideBtn" onclick="enableColumnClickModeEncrypt()">Write out A Column at a time</button>
+            <button class="wideBtn" onclick="writeAllRows()">Write out Rows</button>
+            <button class="wideBtn" onclick="undoLast()">Undo Last action</button>
+            <button class="wideBtn" onclick="clearFinalMessage()">Clear Final Message</button>
+          </div>
+
+          <h3>Rough Work Notes</h3>
+          <textarea id="notes" style="height:70px;"></textarea>
+
+        </div>
+
+        <div class="right-panel">
+          <h3 style="margin-top:0;">Key Row</h3>
+          <table id="keyRow"><tbody></tbody></table>
+
+          <h3 style="margin-top:6px;">Matrix</h3>
+          <table id="matrix"><tbody></tbody></table>
+        </div>
+
       </div>
 
-      <div style="display:flex; align-items:center; gap:6px;">
-        <label for="cols">Columns:</label>
-        <input type="number" id="cols" min="1" value="1" style="width:60px; text-align:center;">
-      </div>
-    </div>
+    </td>
 
-    <div class="controls">
-      <button class="wideBtn" onclick="fillRows()">Fill table Row by Row</button>
-      <button class="wideBtn" onclick="enableColumnClickModeDecrypt()">Fill table Column by Column</button>
-      <button class="wideBtn" onclick="refreshTable()">Refresh Table</button>
+    <!-- RIGHT COLUMN — IMAGE ONLY -->
+    <td style="width:34%; vertical-align:top; padding-left:20px; text-align:center;">
 
-      <button onclick="addFiller()" style="width:120px;">Add Fill</button>
-      <input type="text" id="fillerChar" value="X" maxlength="1" style="width:22px; text-align:center;">
-    </div>
+      <!-- Your exact working image tag -->
+      <img src="assets/images/main_faheem_with_2025.png"
+           alt="Faheem 2025 Full Image"
+           style="width:100%; max-width:350px; height:auto; border-radius:8px;">
 
-    <h3>Final Message</h3>
-    <textarea id="cipher" readonly style="height:28px; line-height:20px;"></textarea>
+    </td>
 
-    <div class="controls">
-      <button class="wideBtn" onclick="enableColumnClickModeEncrypt()">Write out A Column at a time</button>
-      <button class="wideBtn" onclick="writeAllRows()">Write out Rows</button>
-      <button class="wideBtn" onclick="undoLast()">Undo Last action</button>
-      <button class="wideBtn" onclick="clearFinalMessage()">Clear Final Message</button>
-    </div>
+  </tr>
+</table>
 
-    <h3>Rough Work Notes</h3>
-    <textarea id="notes" style="height:70px;"></textarea>
-
-    <h3>Key Row</h3>
-    <table id="keyRow"><tbody></tbody></table>
-
-    <h3>Matrix</h3>
-    <table id="matrix"><tbody></tbody></table>
-
-  </div>
-
-  <!-- RIGHT SIDE (34%) -->
-  <div class="right-column">
-
-    <img src="../assets/images/main_faheem_with_2025.png" alt="Faheem 2025 Full Image">
-
-  </div>
-
-</div>
-
+<!-- ============================================================
+     JAVASCRIPT (UNCHANGED)
+     ============================================================ -->
 <script>
-/* ============================================================
-   CORE LOGIC (unchanged)
-   ============================================================ */
+/* CORE LOGIC — unchanged */
 let lastHighlightedColumn = null;
 let mode = "encrypt";
 let cipherForDecrypt = "";
@@ -408,9 +401,6 @@ function enableColumnClickModeDecrypt() {
   }
 }
 
-/* ============================================================
-   AUTO ADVANCE LOGIC
-   ============================================================ */
 function setupMatrixAutoAdvance() {
   const rows = getMatrixCells();
   if (!rows.length) return;
