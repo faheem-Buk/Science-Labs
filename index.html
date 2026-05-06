@@ -15,6 +15,12 @@
       overflow-x: hidden;
     }
 
+    .page-container {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
     .left-column {
       width: 66%;
       padding: 25px;
@@ -79,6 +85,8 @@
 
 <body>
 
+<div class="page-container">
+
 <div class="left-column">
 
   <h1 style="margin:0; padding:0; font-size:36px; font-weight:700; text-align:left;">
@@ -89,7 +97,7 @@
       Tools for Scientists and Engineers
   </h2>
 
-  <!-- dualBox placed correctly -->
+  <!-- dualBox -->
   <div id="dualBox"
        style="
           position: relative;
@@ -214,6 +222,8 @@ A significant part of this experience was shaped during my years lecturing crypt
 <div class="right-column">
   <img src="assets/images/main_faheem_with_2025.png" alt="Faheem 2025 Full Image">
 </div>
+
+</div> <!-- end page-container -->
 
 <!-- ABOUT PROJECT MODAL -->
 <div id="aboutProjectModal" style="
