@@ -170,7 +170,7 @@ A significant part of this experience was shaped during my years lecturing crypt
 
 
   <div class="main-container">
-    <br><br>
+    <br><br><br>
 
     <h1 style="margin: 5px 0 5px 0; text-align:center;">
         Welcome to the Main Room
@@ -315,6 +315,101 @@ A significant part of this experience was shaped during my years lecturing crypt
     }
 </script>
 
+<!-- ABOUT PROJECT MODAL -->
+<div id="aboutProjectModal" style="
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:66%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    z-index:9999;
+">
+    <div style="
+        background:white;
+        height:100%;
+        padding:20px;
+        overflow-y:auto;
+    ">
+        <span class="closeAboutProject" style="
+            float:right;
+            font-size:28px;
+            cursor:pointer;
+        ">&times;</span>
+
+        <h2>About This Project</h2>
+        <p>Your text goes here...</p>
+    </div>
+</div>
+
+<!-- SCRIPT FOR MODAL -->
+<script>
+    const aboutModal = document.getElementById("aboutProjectModal");
+    const closeAbout = document.querySelector(".closeAboutProject");
+
+    function openAboutProject() {
+        aboutModal.style.display = "block";
+    }
+
+    closeAbout.onclick = function() {
+        aboutModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target === aboutModal) {
+            aboutModal.style.display = "none";
+        }
+    }
+</script>
+
+  <!-- ABOUT PROJECT MODAL -->
+<div id="aboutProjectModal" style="
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:66%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    z-index:9999;
+">
+    <div style="
+        background:white;
+        height:100%;
+        padding:20px;
+        overflow-y:auto;
+    ">
+        <span class="closeAboutProject" style="
+            float:right;
+            font-size:28px;
+            cursor:pointer;
+        ">&times;</span>
+
+        <h2>About This Project</h2>
+        <p>Your text goes here...</p>
+    </div>
+</div>
+
+<!-- SCRIPT FOR MODAL -->
+<script>
+    const aboutModal = document.getElementById("aboutProjectModal");
+    const closeAbout = document.querySelector(".closeAboutProject");
+
+    function openAboutProject() {
+        aboutModal.style.display = "block";
+    }
+
+    closeAbout.onclick = function() {
+        aboutModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target === aboutModal) {
+            aboutModal.style.display = "none";
+        }
+    }
+</script>
 
   
 </body>
