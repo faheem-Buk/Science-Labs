@@ -97,75 +97,75 @@
       Tools for Scientists and Engineers
   </h2>
 
-  <!-- dualBox -->
-  <div id="dualBox"
-       style="
-          position: relative;
-          width: 70%;
-          margin: 20px auto;
-          display: none;
-          gap: 10px;
-       ">
+<!-- OPEN BUTTON -->
+<button onclick="document.getElementById('dualBox').style.display='flex'"
+        style="padding: 6px 12px; font-size: 14px; cursor: pointer; margin-left: 12px;">
+    About This Project
+</button>
 
-      <button onclick="document.getElementById('dualBox').style.display='none';"
-          style="
-              position: absolute;
-              top: -10px;
-              right: -10px;
-              background: #4ec9f0;
-              color: white;
-              border: none;
-              border-radius: 50%;
-              width: 28px;
-              height: 28px;
-              font-weight: bold;
-              cursor: pointer;
-              box-shadow: 0 0 4px rgba(0,0,0,0.2);
-          ">
-          ×
-      </button>
+<!-- dualBox -->
+<div id="dualBox"
+     style="
+        position: relative;
+        width: 70%;
+        margin: 20px auto;
+        display: none;
+        gap: 10px;
+     ">
 
-      <textarea
-          style="
-              width: 50%;
-              height: 350px;
-              direction: ltr;
-              text-align: left;
-              padding: 10px;
-              font-size: 16px;
-              box-sizing: border-box;
-              resize: vertical;
-          "
-      >Experience and Teaching Foundations
+    <!-- CLOSE BUTTON -->
+    <button onclick="document.getElementById('dualBox').style.display='none';"
+            style="
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                background: #4ec9f0;
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 28px;
+                height: 28px;
+                font-weight: bold;
+                cursor: pointer;
+                box-shadow: 0 0 4px rgba(0,0,0,0.2);
+            ">
+        ×
+    </button>
+
+    <textarea
+        style="
+            width: 50%;
+            height: 350px;
+            direction: ltr;
+            text-align: left;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+            resize: vertical;
+        "
+    >Experience and Teaching Foundations
 This project is built on experience accumulated from a background in aviation engineering, computer science, and more than 30 years of teaching. Aviation engineering contributed precision, discipline, and systems-thinking. Computer science added analytical depth and structured problem-solving. Decades of teaching transformed these skills into clear, practical, learner-focused methods.
 
 A significant part of this experience was shaped during my years lecturing cryptography at Griffith College in Dublin in Ireland. The college provided a supportive, respectful, and intellectually rich teaching environment — one that valued clarity, academic integrity, and student-centered learning. The positive atmosphere, professional recognition, and collaborative culture at Griffith College played an important role in refining my approach to teaching and educational design.</textarea>
 
-      <textarea
-          style="
-              width: 50%;
-              height: 350px;
-              direction: rtl;
-              text-align: right;
-              padding: 10px;
-              font-size: 18px;
-              font-family: 'Amiri', serif;
-              box-sizing: border-box;
-              resize: vertical;
-          "
-      >الخبرة وأسس التدريس
+    <textarea
+        style="
+            width: 50%;
+            height: 350px;
+            direction: rtl;
+            text-align: right;
+            padding: 10px;
+            font-size: 18px;
+            font-family: 'Amiri', serif;
+            box-sizing: border-box;
+            resize: vertical;
+        "
+    >الخبرة وأسس التدريس
 يعتمد هذا المشروع على خبرة متراكمة من خلفية في هندسة الطيران وعلوم الحاسوب وأكثر من 30 عامًا من التدريس. فقد أضافت هندسة الطيران الدقة والانضباط والتفكير المنهجي، بينما قدّمت علوم الحاسوب عمقًا تحليليًا وحلولًا منظمة للمشكلات. أما عقود التدريس فقد حولت هذه المهارات إلى أساليب تعليمية واضحة وعملية تتمحور حول المتعلّم.
 
 وقد تشكّل جزء مهم من هذه الخبرة خلال سنوات تدريسي لعلم التشفير في كلية غريفيث في دبلن في إيرلندا. فقد وفّرت الكلية بيئة تعليمية داعمة ومحترمة وغنية أكاديميًا — بيئة تقدّر الوضوح والنزاهة الأكاديمية وتركيزها على الطالب. وقد ساهم الجو الإيجابي والاحترام المهني والثقافة التعاونية في كلية غريفيث بدور كبير في صقل منهجيتي في التدريس وتصميم المواد التعليمية.</textarea>
 
-  </div>
-
-  <div style="margin-top: 10px; text-align: left;">
-    
-<button onclick="openAboutProject()" 
-        style="padding: 6px 12px; font-size: 14px; cursor: pointer; margin-left: 12px;">
-    About This Project
-</button>
+</div>
 
   </div>
 
@@ -272,6 +272,11 @@ A significant part of this experience was shaped during my years lecturing crypt
             aboutModal.style.display = "none";
         }
     }
+</script>
+<script>
+function openAboutProject() {
+    document.getElementById('dualBox').style.display = 'flex';
+}
 </script>
 
 </body>
