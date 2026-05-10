@@ -631,6 +631,30 @@ function enableTyping() {
   }
 }
 
+function onCellClick(row, col, value) {
+    // 1. Fill the cell
+    table[row][col].textContent = value;
+
+    // 2. Move the cursor depending on arrowDirection
+    if (arrowDirection === "R") {
+        selectedCol++;
+        if (selectedCol >= totalCols) {
+            selectedCol = 0;
+            selectedRow++;
+        }
+    } else { // arrowDirection === "D"
+        selectedRow++;
+        if (selectedRow >= totalRows) {
+            selectedRow = 0;
+            selectedCol++;
+        }
+    }
+
+    // 3. Highlight the new cell
+    highlightCell(selectedRow, selectedCol);
+}
+
+
 function disableTyping() {
   const rows = getMatrixCells();
   if (!rows.length) return;
@@ -694,6 +718,8 @@ function toggleArrowDirection() {
         arrowDirection = "R";   // left-right mode
     }
 }
+
+
 
 
 /* ---------- END JAVASCRIPT ---------- */
